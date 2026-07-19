@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INNMODALAB | Portal Editorial de Divulgación Científica y Tecnológica</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Comfortaa -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Comfortaa:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            dark: '#030712',
+                            card: 'rgba(11, 19, 43, 0.45)',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            mint: '#39A900', // SENA Green
+                            coral: '#f43f5e', // Warm coral accent matching the INNMODALAB logo tone
+                            cyan: '#06b6d4',
+                            lavender: '#a855f7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        title: ['Comfortaa', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth glowing scrolling background */
+        body {
+            background-color: #02050e;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Ambient glowing circles */
+        .ambient-aurora {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.25;
+        }
+
+        /* Glassmorphism premium panels */
+        .glass-panel {
+            background: rgba(10, 18, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(57, 169, 0, 0.3);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(57, 169, 0, 0.1);
+        }
+
+        /* Tab highlights custom animation */
+        .active-tab {
+            background: linear-gradient(90deg, rgba(57, 169, 0, 0.2) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border-left: 4px solid #39A900;
+        }
+
+        /* Smooth reveal transitions */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #02050e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #39A900;
+        }
+    </style>
+</head>
+<body class="text-slate-100 antialiased font-sans">
+
+    <!-- Ambient Glow Backgrounds -->
+    <div class="ambient-aurora w-[600px] h-[600px] bg-cyber-mint top-[-10%] right-[-10%]"></div>
+    <div class="ambient-aurora w-[500px] h-[500px] bg-cyber-lavender top-[40%] left-[-10%]"></div>
+    <div class="ambient-aurora w-[600px] h-[600px] bg-cyber-cyan bottom-[-5%] right-[5%]"></div>
+
+    <!-- NAVIGATION HEADER -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-cyber-border transition-all duration-300" id="mainNavbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Branding Area incorporating both logos -->
+                <div class="flex items-center gap-4">
+                    <!-- Sena.png - Vibrant Green SENA logo -->
+                    <img src="./IMG/sena.png" alt="SENA Logo" class="h-11 w-auto object-contain hover:scale-105 transition-transform" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/83/SENA_logo.svg'">
+                    <div class="h-8 w-[1px] bg-cyber-border"></div>
+                    <!-- image_404379.png - Warm/coral IML INNMODALAB brand logo -->
+                    <img src="./IMG/MODA1.jpeg" alt="INNMODALAB Logo" class="h-10 w-auto object-contain hover:scale-105 transition-transform" onerror="this.src='image_404303.png'">
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-1 xl:gap-2">
+                    <a href="#inicio" data-i18n="nav_inicio" class="text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-2 rounded-lg transition-colors">Inicio</a>
+                    <a href="#sobre" data-i18n="nav_sobre" class="text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-2 rounded-lg transition-colors">Sobre la revista</a>
+                    <a href="#actual" data-i18n="nav_actual" class="text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-2 rounded-lg transition-colors">Actual</a>
+                    <a href="#anteriores" data-i18n="nav_anteriores" class="text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-2 rounded-lg transition-colors">Anteriores</a>
+                    <a href="#avisos" data-i18n="nav_avisos" class="text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-2 rounded-lg transition-colors">Avisos</a>
+                    <a href="#directrices" data-i18n="nav_directrices" class="text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-2 rounded-lg transition-colors">Directrices</a>
+                    <a href="#equipo" data-i18n="nav_equipo" class="text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-2 rounded-lg transition-colors">Equipo</a>
+                    <a href="#bibliotecas" data-i18n="nav_red" class="text-[11px] xl:text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-2 rounded-lg transition-colors">Red</a>
+                    <a href="#contacto" data-i18n="nav_contacto" class="bg-cyber-mint/10 border border-cyber-mint/30 text-cyber-mint hover:bg-cyber-mint hover:text-white font-semibold text-[11px] xl:text-xs uppercase tracking-wider px-3.5 py-2 rounded-lg transition-all">Contacto</a>
+                    
+                    <!-- LANGUAGE TOGGLE BUTTON (DESKTOP) -->
+                    <button onclick="toggleLanguage()" class="flex items-center gap-1.5 ml-2 px-3 py-1.5 rounded-lg border border-cyber-border bg-slate-900/60 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-cyber-mint transition-all" id="langBtnDesktop">
+                        <i data-lucide="languages" class="w-4 h-4 text-cyber-mint"></i>
+                        <span id="currentLangDesktop">ES</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center gap-3">
+                    <!-- LANGUAGE TOGGLE BUTTON (MOBILE HEAD) -->
+                    <button onclick="toggleLanguage()" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-cyber-border bg-slate-900/60 text-xs font-bold uppercase tracking-wider text-slate-300" id="langBtnMobileHead">
+                        <i data-lucide="languages" class="w-3.5 h-3.5 text-cyber-mint"></i>
+                        <span id="currentLangMobileHead">ES</span>
+                    </button>
+                    <button id="mobileMenuBtn" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-cyber-border bg-cyber-dark/95 backdrop-blur-xl">
+            <div class="px-4 py-6 space-y-3">
+                <a href="#inicio" data-i18n="nav_inicio" class="block text-sm font-medium text-slate-300 hover:text-white py-2">Inicio</a>
+                <a href="#sobre" data-i18n="nav_sobre" class="block text-sm font-medium text-slate-300 hover:text-white py-2">Sobre la revista</a>
+                <a href="#actual" data-i18n="nav_actual" class="block text-sm font-medium text-slate-300 hover:text-white py-2">Actual</a>
+                <a href="#anteriores" data-i18n="nav_anteriores" class="block text-sm font-medium text-slate-300 hover:text-white py-2">Anteriores</a>
+                <a href="#avisos" data-i18n="nav_avisos" class="block text-sm font-medium text-slate-300 hover:text-white py-2">Avisos</a>
+                <a href="#directrices" data-i18n="nav_directrices" class="block text-sm font-medium text-slate-300 hover:text-white py-2">Directrices & Envíos</a>
+                <a href="#equipo" data-i18n="nav_equipo" class="block text-sm font-medium text-slate-300 hover:text-white py-2">Equipo Editorial</a>
+                <a href="#bibliotecas" data-i18n="nav_red" class="block text-sm font-medium text-slate-300 hover:text-white py-2">Sistema de Bibliotecas</a>
+                <a href="#contacto" data-i18n="nav_contacto" class="block text-center bg-cyber-mint text-white font-semibold py-2.5 rounded-lg">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION & SEARCH ENGINE (EBSCOhost Inspired) -->
+    <header id="inicio" class="relative min-h-screen flex items-center pt-24 lg:pt-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Hero Left: Strategic copy & live academic search -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-cyber-mint/10 border border-cyber-mint/25 px-4 py-1.5 rounded-full text-cyber-mint text-xs sm:text-sm font-semibold tracking-wider uppercase shadow-lg shadow-cyber-mint/5">
+                        <i data-lucide="award" class="w-4 h-4 animate-pulse"></i> <span data-i18n="hero_badge">Ecosistema Editorial SENNOVA</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight leading-none text-white font-title">
+                        <span data-i18n="hero_title_1">Investigación</span> <br class="hidden sm:inline">
+                        <span class="bg-gradient-to-r from-white via-cyber-mint to-cyan-400 bg-clip-text text-transparent" data-i18n="hero_title_2">Textil & Diseño</span> <br>
+                        <span data-i18n="hero_title_3">Vanguardia Científica</span>
+                    </h1>
+                    
+                    <p class="text-base sm:text-lg text-slate-400 max-w-2xl" id="heroDescText">
+                        Bienvenidos a <strong class="text-white">INNMODALAB</strong> (IML), el portal de divulgación científica arbitrada de alta indexación del Centro de Manufactura en Textil y Cuero del SENA.
+                    </p>
+
+                    <!-- EBSCOhost Interactive Search Bar -->
+                    <div class="bg-slate-900/60 p-2 rounded-2xl border border-cyber-border backdrop-blur-md shadow-2xl max-w-xl">
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <div class="flex-1 flex items-center gap-2 px-3 py-1 bg-slate-950/60 rounded-xl border border-cyber-border">
+                                <i data-lucide="search" class="text-cyber-mint w-5 h-5 flex-shrink-0"></i>
+                                <input type="text" id="ebscoQuery" class="bg-transparent border-none outline-none text-white w-full placeholder-slate-500 text-sm" placeholder="Buscar por DOI, autor, wearable, biopolímeros...">
+                            </div>
+                            <button onclick="simulateEbscoSearch()" class="bg-cyber-mint hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-cyber-mint/20">
+                                <span data-i18n="hero_search_btn">Buscar</span> <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-4 mt-2 px-2 text-[11px] text-slate-500 font-medium">
+                            <span data-i18n="hero_index_status">Indexaciones activas:</span>
+                            <span class="text-slate-400 hover:text-white transition-colors cursor-pointer"><i data-lucide="check" class="inline w-3 h-3 text-cyber-mint"></i> Latindex 2.0</span>
+                            <span class="text-slate-400 hover:text-white transition-colors cursor-pointer"><i data-lucide="check" class="inline w-3 h-3 text-cyber-mint"></i> EBSCOhost</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right: Dynamic Mockup & Premium IML Badge Card -->
+                <div class="lg:col-span-5 relative flex justify-center">
+                    <div class="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-cyber-mint via-cyan-500 to-purple-600 opacity-20 blur-2xl animate-pulse"></div>
+                    
+                    <div class="relative w-full max-w-sm glass-panel rounded-3xl p-6 sm:p-8 shadow-2xl border border-cyber-border flex flex-col justify-between overflow-hidden" id="dynamicCard">
+                        <div class="flex justify-between items-center pb-4 mb-4 border-b border-cyber-border">
+                            <!-- image_404303.png - Pure IML Green Badge as emblem -->
+                            <img src="image_404303.png" alt="IML Emblem" class="h-8 w-auto object-contain" onerror="this.src='https://placehold.co/80x30/111827/ffffff?text=IML'">
+                            <span class="text-[11px] font-mono text-slate-500" id="cardDoi">DOI: 10.5281/iml.v8i1.124</span>
+                        </div>
+
+                        <div class="space-y-3">
+                            <span class="inline-block bg-cyber-mint/10 text-cyber-mint border border-cyber-mint/20 text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded" id="cardTag">Textil Inteligente</span>
+                            <h3 class="text-lg font-bold text-white leading-snug" id="cardTitle">Wearables flexosensores aplicados al vestuario ergonómico laboral</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed" id="cardExcerpt">Estudio empírico de captura telemétrica de movimiento para la prevención de riesgos ergonómicos de operarios en manufactura textil.</p>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-cyber-border flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-cyber-mint animate-ping"></span>
+                                <span class="text-xs font-bold text-cyber-mint" id="cardVolume">Vol. 8 Núm. 1 (2026)</span>
+                            </div>
+                            <button onclick="showDetailsModal('first-paper')" class="text-xs text-cyan-400 font-semibold hover:underline flex items-center gap-1"><span data-i18n="hero_view_abstract">Ver Abstract</span> <i data-lucide="chevron-right" class="w-3 h-3"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- SOBRE LA REVISTA & ACERCA DE -->
+    <section id="sobre" class="section reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header text-center max-w-3xl mx-auto mb-16">
+            <h2 class="section-title text-4xl font-extrabold" data-i18n="about_section_title">Sobre la Revista & Acerca de</h2>
+            <p class="section-subtitle mt-2 text-slate-400" data-i18n="about_section_subtitle">INNMODALAB es la vitrina científica dedicada al fomento de la innovación técnica aplicable del sector moda, confección, diseño y manufactura.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            <div class="glass-panel p-8 sm:p-10 rounded-2xl flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-cyber-mint" data-i18n="about_box1_tag">Misión de Divulgación</span>
+                    <h3 class="text-2xl font-bold text-white font-title" data-i18n="about_box1_title">Enfoque de Ciencia Abierta (Open Access)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed" data-i18n="about_box1_desc">
+                        Nuestra misión es potenciar y dar máxima visibilidad a la producción intelectual de instructores, aprendices, investigadores y semilleros de investigación asociados a las industrias creativas y manufactureras.
+                    </p>
+                    <ul class="space-y-3 pt-2 text-sm text-slate-300">
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-cyber-mint w-5 h-5 flex-shrink-0"></i> <span data-i18n="about_box1_bullet1">Conexión inmediata con catálogos internacionales.</span></li>
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-cyber-mint w-5 h-5 flex-shrink-0"></i> <span data-i18n="about_box1_bullet2">Evaluación estricta bajo modelo por pares dobles ciegos.</span></li>
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="text-cyber-mint w-5 h-5 flex-shrink-0"></i> <span data-i18n="about_box1_bullet3">Distribución libre bajo licencias Creative Commons.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-panel p-8 sm:p-10 rounded-2xl flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-cyber-lavender" data-i18n="about_box2_tag">Respaldo Metodológico</span>
+                    <h3 class="text-2xl font-bold text-white font-title" data-i18n="about_box2_title">Sello de Calidad SENNOVA</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed" data-i18n="about_box2_desc">
+                        Nacidos bajo el amparo metodológico y financiero de SENNOVA, INNMODALAB actúa como la principal plataforma de difusión de patentes, prototipos de nanotecnología textil y ecodiseño creados en el Centro de Manufactura en Textil y Cuero.
+                    </p>
+                    <div class="p-4 bg-slate-950/40 rounded-xl border border-cyber-border flex items-center gap-4">
+                        <div class="w-12 h-12 bg-cyber-mint/15 rounded-lg flex items-center justify-center text-cyber-mint flex-shrink-0">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white" data-i18n="about_ethics_title">Comité de Ética Científica</h4>
+                            <p class="text-xs text-slate-500" data-i18n="about_ethics_desc">Garantizando la transparencia y originalidad de cada paper.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTUAL (ÚLTIMO NÚMERO) -->
+    <section id="actual" class="section reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header text-center max-w-3xl mx-auto mb-16">
+            <span class="bg-cyber-coral/10 text-cyber-coral border border-cyber-coral/25 text-xs font-extrabold uppercase px-3 py-1 rounded-full" data-i18n="actual_badge">Actualización Reciente</span>
+            <h2 class="section-title text-4xl font-extrabold mt-4" data-i18n="actual_title">Número Actual</h2>
+            <p class="section-subtitle mt-2 text-slate-400" data-i18n="actual_subtitle">Volumen 8, Número 1 (2026). Investigación aplicada y desarrollos disruptivos del semestre en curso.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <!-- Article 1 -->
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300">
+                <div class="space-y-4">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-mint" data-i18n="actual_p1_tag">Textil & Moda</span>
+                    <h3 class="text-lg font-bold text-white leading-snug" id="actualP1Title">Modificación superficial de fibras sintéticas con micropartículas antimicrobianas</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" id="actualP1Desc">Estudio de funcionalización textil contra patógenos intrahospitalarios mediante recubrimientos moleculares ecológicos.</p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-cyber-border flex justify-between items-center">
+                    <span class="text-xs text-slate-500 font-mono">DOI: 10.5281/iml.01</span>
+                    <button onclick="showDetailsModal('paper-1')" class="text-xs text-cyber-mint font-bold hover:underline" data-i18n="actual_p_btn">Ver PDF</button>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300">
+                <div class="space-y-4">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-cyan" data-i18n="actual_p2_tag">Cuero & Calzado</span>
+                    <h3 class="text-lg font-bold text-white leading-snug" id="actualP2Title">Estudio biomecánico para calzado ortopédico infantil mediante modelado 3D</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" id="actualP2Desc">Desarrollo de prototipos de suelas inteligentes impresas en poliuretano termoplástico adaptativo mediante manufactura aditiva.</p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-cyber-border flex justify-between items-center">
+                    <span class="text-xs text-slate-500 font-mono">DOI: 10.5281/iml.02</span>
+                    <button onclick="showDetailsModal('paper-2')" class="text-xs text-cyber-cyan font-bold hover:underline" data-i18n="actual_p_btn">Ver PDF</button>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300">
+                <div class="space-y-4">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-lavender" data-i18n="actual_p3_tag">Economía Circular</span>
+                    <h3 class="text-lg font-bold text-white leading-snug" id="actualP3Title">Aprovechamiento de residuos de curtición de cuero como biopolímeros</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" id="actualP3Desc">Aislamiento de colágeno industrial para la formulación de nuevos aglomerados biodegradables de diseño sustentable.</p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-cyber-border flex justify-between items-center">
+                    <span class="text-xs text-slate-500 font-mono">DOI: 10.5281/iml.03</span>
+                    <button onclick="showDetailsModal('paper-3')" class="text-xs text-cyber-lavender font-bold hover:underline" data-i18n="actual_p_btn">Ver PDF</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANTERIORES (HISTORIAL EDITORIAL) -->
+    <section id="anteriores" class="section reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header text-center max-w-3xl mx-auto mb-12">
+            <h2 class="section-title text-4xl font-extrabold" data-i18n="archives_title">Números Anteriores</h2>
+            <p class="section-subtitle mt-2 text-slate-400" data-i18n="archives_subtitle">Historial completo de producción científica y volúmenes archivados para consulta bibliográfica libre.</p>
+        </div>
+
+        <div class="glass-panel rounded-2xl overflow-hidden border border-cyber-border">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-950/80 border-b border-cyber-border">
+                            <th class="p-5 text-sm font-semibold text-slate-200" data-i18n="archives_th1">Volumen / Año</th>
+                            <th class="p-5 text-sm font-semibold text-slate-200" data-i18n="archives_th2">Enfoque Técnico</th>
+                            <th class="p-5 text-sm font-semibold text-slate-200" data-i18n="archives_th3">Artículos</th>
+                            <th class="p-5 text-sm font-semibold text-slate-200" data-i18n="archives_th4">Indexación</th>
+                            <th class="p-5 text-sm font-semibold text-slate-200 text-right" data-i18n="archives_th5">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-cyber-border bg-slate-900/10">
+                        <tr class="hover:bg-slate-800/20 transition-colors">
+                            <td class="p-5 text-sm font-bold text-white">Volumen 7 Núm. 2 (2025)</td>
+                            <td class="p-5 text-sm text-slate-300" data-i18n="archives_r1_focus">Automatización y Tintorería Eco-Eficiente</td>
+                            <td class="p-5 text-sm text-slate-400">12 <span data-i18n="archives_manuscripts">Manuscritos</span></td>
+                            <td class="p-5 text-sm text-cyber-mint"><span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyber-mint"></span> Latindex 2.0</span></td>
+                            <td class="p-5 text-sm text-right"><button onclick="simulatePdfDownload('Vol 7 Num 2')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-cyber-border text-slate-200 font-bold transition-all" data-i18n="archives_view_btn">Ver Índice</button></td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/20 transition-colors">
+                            <td class="p-5 text-sm font-bold text-white">Volumen 7 Núm. 1 (2025)</td>
+                            <td class="p-5 text-sm text-slate-300" data-i18n="archives_r2_focus">Dispositivos IoT y Wearables Industriales</td>
+                            <td class="p-5 text-sm text-slate-400">10 <span data-i18n="archives_manuscripts">Manuscritos</span></td>
+                            <td class="p-5 text-sm text-cyber-mint"><span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyber-mint"></span> Latindex 2.0</span></td>
+                            <td class="p-5 text-sm text-right"><button onclick="simulatePdfDownload('Vol 7 Num 1')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-cyber-border text-slate-200 font-bold transition-all" data-i18n="archives_view_btn">Ver Índice</button></td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/20 transition-colors">
+                            <td class="p-5 text-sm font-bold text-white">Volumen 6 Núm. 2 (2024)</td>
+                            <td class="p-5 text-sm text-slate-300" data-i18n="archives_r3_focus">Ergonomía de Procesos de Confección Pesada</td>
+                            <td class="p-5 text-sm text-slate-400">14 <span data-i18n="archives_manuscripts">Manuscritos</span></td>
+                            <td class="p-5 text-sm text-cyber-mint"><span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyber-mint"></span> EBSCOhost</span></td>
+                            <td class="p-5 text-sm text-right"><button onclick="simulatePdfDownload('Vol 6 Num 2')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-cyber-border text-slate-200 font-bold transition-all" data-i18n="archives_view_btn">Ver Índice</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- AVISOS & CONVOCATORIAS -->
+    <section id="avisos" class="section reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header text-center max-w-3xl mx-auto mb-16">
+            <h2 class="section-title text-4xl font-extrabold" data-i18n="announcements_title">Avisos & Convocatorias Activas</h2>
+            <p class="section-subtitle mt-2 text-slate-400" data-i18n="announcements_subtitle">Manténgase al tanto de las llamadas del comité científico para la recepción de artículos.</p>
+        </div>
+
+        <div class="relative overflow-hidden rounded-3xl p-8 sm:p-12 border border-cyber-border bg-gradient-to-r from-slate-950 via-slate-900 to-cyber-mint/5 shadow-2xl">
+            <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-cyber-mint/5 rounded-full filter blur-[100px] pointer-events-none"></div>
+            
+            <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+                <div class="space-y-4 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 bg-cyber-coral/10 border border-cyber-coral/20 px-3 py-1 rounded-full text-cyber-coral text-xs font-bold uppercase tracking-wider">
+                        <i data-lucide="megaphone" class="w-4 h-4"></i> <span data-i18n="announcements_tag">Call for Papers</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white font-title" data-i18n="announcements_edition">Edición Especial: Vol. 8, Edición 2 (Biopolímeros y Nuevos Materiales)</h3>
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed" data-i18n="announcements_desc">
+                        Se encuentra abierta la recepción de manuscritos enfocados en economía circular, biotecnología vegetal, wearables e IoT y desarrollo sustentable aplicados a la moda.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-6 pt-2">
+                        <div class="flex items-center gap-2 text-xs sm:text-sm text-slate-300">
+                            <i data-lucide="calendar" class="text-cyber-mint w-5 h-5"></i>
+                            <span><span data-i18n="announcements_deadline">Fecha Límite:</span> <strong>15 de Octubre, 2026</strong></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs sm:text-sm text-slate-300">
+                            <i data-lucide="shield-check" class="text-cyber-mint w-5 h-5"></i>
+                            <span><span data-i18n="announcements_rules">Normas:</span> <strong>APA 7ma Edición</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-shrink-0 w-full md:w-auto">
+                    <a href="#directrices" class="block text-center bg-cyber-mint hover:bg-emerald-600 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-xl shadow-cyber-mint/10" data-i18n="announcements_btn">
+                        Postular Artículo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIRECTRICES PARA AUTORES & ENVÍOS -->
+    <section id="directrices" class="section reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header text-center max-w-3xl mx-auto mb-16">
+            <h2 class="section-title text-4xl font-extrabold" data-i18n="guidelines_title">Directrices para Autores &amp; Envíos</h2>
+            <p class="section-subtitle mt-2 text-slate-400" data-i18n="guidelines_subtitle">Instrucciones estructuradas y rigurosas para la postulación exitosa de sus manuscritos.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Guideline Card 1 -->
+            <div class="glass-panel p-8 rounded-2xl border border-cyber-border space-y-4">
+                <div class="w-12 h-12 rounded-xl bg-cyber-mint/10 border border-cyber-mint/20 flex items-center justify-center text-cyber-mint">
+                    <i data-lucide="file-text" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="guidelines_c1_title">1. Formato IMRyD</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="guidelines_c1_desc">
+                    Todos los artículos de investigación deben seguir rígidamente la estructura estándar: Introducción, Metodología, Resultados y Discusión. Deben ser redactados bajo las vigentes directrices de citación APA de última versión.
+                </p>
+            </div>
+
+            <!-- Guideline Card 2 -->
+            <div class="glass-panel p-8 rounded-2xl border border-cyber-border space-y-4">
+                <div class="w-12 h-12 rounded-xl bg-cyber-lavender/10 border border-cyber-lavender/20 flex items-center justify-center text-cyber-lavender">
+                    <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="guidelines_c2_title">2. Políticas Antiplagio</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="guidelines_c2_desc">
+                    Los textos postulados se someten de manera automática al software Turnitin de detección de similitudes de texto. El umbral máximo permitido de coincidencia directa o cita no idónea es del 15% para proceder a revisión.
+                </p>
+            </div>
+
+            <!-- Guideline Card 3 -->
+            <div class="glass-panel p-8 rounded-2xl border border-cyber-border space-y-4">
+                <div class="w-12 h-12 rounded-xl bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan">
+                    <i data-lucide="users" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="guidelines_c3_title">3. Par Doble Ciego</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="guidelines_c3_desc">
+                    Evaluación neutral realizada por una terna de revisores técnicos expertos externos e internos en anonimato cruzado absoluto (Double-Blind Peer Review) para resguardar la imparcialidad científica y metodológica.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- EQUIPO EDITORIAL -->
+    <section id="equipo" class="section reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header text-center max-w-3xl mx-auto mb-16">
+            <h2 class="section-title text-4xl font-extrabold" data-i18n="team_title">Equipo Editorial</h2>
+            <p class="section-subtitle mt-2 text-slate-400" data-i18n="team_subtitle">Nuestra gobernanza científica, integrada por destacados profesionales dedicados al fomento de la excelencia académica.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- Team Card 1 -->
+            <div class="glass-panel p-8 rounded-2xl border border-cyber-border flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+                <div class="w-20 h-20 rounded-full bg-slate-900 border-2 border-cyber-mint flex items-center justify-center flex-shrink-0 text-cyber-mint shadow-lg shadow-cyber-mint/10">
+                    <i data-lucide="user-check" class="w-10 h-10"></i>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-xl font-bold text-white font-title" data-i18n="team_editor_title">Editor en Jefe</h3>
+                    <p class="text-xs font-semibold text-cyber-mint uppercase tracking-wider" data-i18n="team_editor_dept">Centro de Manufactura en Textil y Cuero</p>
+                    <p class="text-slate-400 text-xs sm:text-sm" data-i18n="team_editor_desc">Responsable de coordinar el flujo metodológico general, la asignación de revisores y la validación de indexaciones institucionales del SENA.</p>
+                </div>
+            </div>
+
+            <!-- Team Card 2 -->
+            <div class="glass-panel p-8 rounded-2xl border border-cyber-border flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+                <div class="w-20 h-20 rounded-full bg-slate-900 border-2 border-cyber-lavender flex items-center justify-center flex-shrink-0 text-cyber-lavender shadow-lg shadow-cyber-lavender/10">
+                    <i data-lucide="globe" class="w-10 h-10"></i>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-xl font-bold text-white font-title" data-i18n="team_committee_title">Comité Científico Invitado</h3>
+                    <p class="text-xs font-semibold text-cyber-lavender uppercase tracking-wider" data-i18n="team_committee_dept">Investigadores Externos</p>
+                    <p class="text-slate-400 text-xs sm:text-sm" data-i18n="team_committee_desc">Red multidisciplinar de Doctores y evaluadores adscritos a Minciencias e institutos de desarrollo textil internacionales de alta competitividad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SISTEMA DE BIBLIOTECAS & OTRAS REVISTAS -->
+    <section id="bibliotecas" class="section reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative overflow-hidden rounded-3xl p-8 sm:p-12 border border-cyber-border bg-slate-950 shadow-2xl text-center">
+            <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-cyber-mint/10 rounded-full filter blur-[80px] pointer-events-none"></div>
+            
+            <div class="relative space-y-6 max-w-4xl mx-auto">
+                <div class="flex justify-center mb-6">
+                    <!-- Sena.png - Vibrant Green SENA logo as symbol -->
+                    <img src="Sena.png" alt="SENA" class="h-14 w-auto object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/83/SENA_logo.svg'">
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-title" data-i18n="library_title">Integrados al Sistema de Bibliotecas SENA</h2>
+                <p class="text-slate-400 text-sm sm:text-base leading-relaxed" id="libraryDescText">
+                    La producción intelectual e indexaciones de la revista <strong class="text-white">INNMODALAB</strong> se interconectan con los repositorios nacionales institucionales y la red nacional de divulgación técnica.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto pt-6">
+                    <div class="p-4 bg-slate-900/50 rounded-xl border border-cyber-border flex items-center justify-center gap-3">
+                        <i data-lucide="book-open" class="text-cyber-mint w-5 h-5 flex-shrink-0"></i>
+                        <span class="text-sm font-semibold text-slate-200">Revista Vector (SENA)</span>
+                    </div>
+                    <div class="p-4 bg-slate-900/50 rounded-xl border border-cyber-border flex items-center justify-center gap-3">
+                        <i data-lucide="file-digit" class="text-cyber-lavender w-5 h-5 flex-shrink-0"></i>
+                        <span class="text-sm font-semibold text-slate-200">Informador Técnico (SENA)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO (CORRESPONDENCIA EDITORIAL) -->
+    <section id="contacto" class="section reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-header text-center max-w-3xl mx-auto mb-16">
+            <h2 class="section-title text-4xl font-extrabold" data-i18n="contact_title">Canal de Correspondencia</h2>
+            <p class="section-subtitle mt-2 text-slate-400" data-i18n="contact_subtitle">Comuníquese de forma ágil y transparente con la mesa técnica y editorial de la revista.</p>
+        </div>
+
+        <div class="glass-panel max-w-3xl mx-auto rounded-3xl p-8 sm:p-12 border border-cyber-border shadow-2xl relative">
+            <form onsubmit="event.preventDefault(); handleContactSubmit();" class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400" data-i18n="contact_lbl_name">Nombre Completo</label>
+                        <input type="text" id="contactName" required class="w-full bg-slate-950/60 border border-cyber-border rounded-xl px-4 py-3 text-white outline-none focus:border-cyber-mint transition-colors text-sm" placeholder="Ej. Dr. Andrés Villamizar">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400" data-i18n="contact_lbl_email">Correo Institucional (Filiación)</label>
+                        <input type="email" id="contactEmail" required class="w-full bg-slate-950/60 border border-cyber-border rounded-xl px-4 py-3 text-white outline-none focus:border-cyber-mint transition-colors text-sm" placeholder="Ej. avillamizar@sena.edu.co">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold uppercase tracking-wider text-slate-400" data-i18n="contact_lbl_msg">Resumen del Manuscrito o Inquietud Técnica</label>
+                    <textarea id="contactMsg" required rows="5" class="w-full bg-slate-950/60 border border-cyber-border rounded-xl px-4 py-3 text-white outline-none focus:border-cyber-mint transition-colors text-sm" placeholder="Por favor desglose el abstract conceptual, objetivos metodológicos e hipótesis de su propuesta de artículo..."></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-cyber-mint hover:bg-emerald-600 text-white font-bold py-4 rounded-xl transition-all duration-300 shadow-xl shadow-cyber-mint/20 flex items-center justify-center gap-2">
+                    <span data-i18n="contact_btn">Enviar Solicitud al Editor</span> <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER WITH REAL LOGOS -->
+    <footer class="bg-slate-950 border-t border-cyber-border py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
+                
+                <!-- Logo & brand -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <img src="./IMG/MODA.jpeg" alt="SENA" class="h-12 w-auto object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/83/SENA_logo.svg'">
+                        <div class="h-8 w-[1px] bg-cyber-border"></div>
+                        <img src="./IMG/MODA1.jpeg" alt="INNMODALAB" class="h-10 w-auto object-contain" onerror="this.src='image_404303.png'">
+                    </div>
+                    <p class="text-xs text-slate-500 max-w-xs mx-auto md:mx-0" data-i18n="footer_brand_desc">
+                        Portal científico indexado del Centro de Manufactura en Textil y Cuero. Publicación abierta y regulada de alta exigencia metodológica.
+                    </p>
+                </div>
+
+                <!-- OJS Navigation Links -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-slate-300" data-i18n="footer_links_head">Navegación OJS</h4>
+                    <ul class="space-y-2 text-xs text-slate-500">
+                        <li><a href="#sobre" class="hover:text-white transition-colors" data-i18n="nav_sobre">Sobre la Revista</a></li>
+                        <li><a href="#actual" class="hover:text-white transition-colors" data-i18n="nav_actual">Número Actual</a></li>
+                        <li><a href="#anteriores" class="hover:text-white transition-colors" data-i18n="nav_anteriores">Números Anteriores</a></li>
+                        <li><a href="#directrices" class="hover:text-white transition-colors" data-i18n="nav_directrices">Directrices de Autor</a></li>
+                    </ul>
+                </div>
+
+                <!-- Licensing Slots & OJS Logos -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-slate-300" data-i18n="footer_lic_head">Soporte Técnico & Licencias</h4>
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <!-- Simulated OJS branding placeholder -->
+                        <div class="h-10 px-3 bg-slate-900 border border-cyber-border rounded-lg flex items-center justify-center text-[10px] font-bold text-slate-400">OJS / PKP</div>
+                        <!-- Simulated Creative Commons placeholder -->
+                        <div class="h-10 px-3 bg-slate-900 border border-cyber-border rounded-lg flex items-center justify-center text-[10px] font-bold text-slate-400">CC BY-NC-ND</div>
+                    </div>
+                    <p class="text-[10px] text-slate-500" data-i18n="footer_lic_desc">
+                        Sistemas integrados de código abierto para la gestión editorial global. Licencia Creative Commons Internacional 4.0.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Credits and Legal -->
+            <div class="mt-12 pt-8 border-t border-cyber-border text-center flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+                <span data-i18n="footer_copyright">&copy; 2026 Servicio Nacional de Aprendizaje (SENA) - SENNOVA. Todos los derechos reservados.</span>
+                <span class="flex items-center gap-1" data-i18n="footer_credits">Diseñado bajo lineamientos de innovación institucional del SENA.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PORTABLE CUSTOM NOTIFICATION TOAST -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-[100] transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none max-w-sm w-full">
+        <div class="bg-slate-900/95 border border-cyber-mint/50 rounded-2xl p-4 shadow-2xl flex items-start gap-3 backdrop-blur-xl">
+            <div class="w-8 h-8 rounded-lg bg-cyber-mint/10 flex items-center justify-center text-cyber-mint flex-shrink-0">
+                <i data-lucide="check" class="w-5 h-5"></i>
+            </div>
+            <div>
+                <h4 class="text-sm font-bold text-white" id="toastTitle">Éxito</h4>
+                <p class="text-xs text-slate-400 mt-1" id="toastMessage">Operación realizada correctamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DYNAMIC SCIENTIFIC MODAL (Replaces alerts) -->
+    <div id="scientificModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-cyber-dark/80 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl p-6 sm:p-8 space-y-6 relative border border-cyber-border shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+            <button onclick="closeDetailsModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="bg-cyber-mint/10 text-cyber-mint border border-cyber-mint/20 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded" id="modalTag">Fila Metodológica</span>
+                    <span class="text-xs font-mono text-slate-500" id="modalDoi">DOI: 10.5281/iml.xyz</span>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold text-white font-title" id="modalTitle">Título del Artículo</h3>
+                <div class="p-4 bg-slate-950/60 rounded-xl border border-cyber-border space-y-2">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400" id="modalAbstractHeader">Resumen Académico (Abstract)</h4>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed" id="modalAbstract">Abstract de la propuesta científica.</p>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-cyber-border flex justify-between items-center">
+                <span class="text-xs text-slate-500" id="modalVolume">INNMODALAB Vol. 8</span>
+                <button onclick="closeDetailsModal()" class="bg-cyber-mint hover:bg-emerald-600 text-white font-bold text-xs px-5 py-2.5 rounded-lg transition-colors" id="modalCloseBtnText">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT SYSTEM LOGIC -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggling Mechanisms
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close Mobile Menu on Click
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Custom Premium Toast Notification System
+        function showToast(title, message, isSuccess = true) {
+            const toast = document.getElementById('toastNotification');
+            const tTitle = document.getElementById('toastTitle');
+            const tMessage = document.getElementById('toastMessage');
+
+            tTitle.innerText = title;
+            tMessage.innerText = message;
+
+            if (isSuccess) {
+                toast.firstElementChild.style.borderColor = 'rgba(57, 169, 0, 0.5)';
+            } else {
+                toast.firstElementChild.style.borderColor = 'rgba(244, 63, 94, 0.5)';
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        }
+
+        // Translation Dictionary (i18n)
+        const i18n = {
+            es: {
+                nav_inicio: "Inicio",
+                nav_sobre: "Sobre la revista",
+                nav_actual: "Actual",
+                nav_anteriores: "Anteriores",
+                nav_avisos: "Avisos",
+                nav_directrices: "Directrices",
+                nav_equipo: "Equipo",
+                nav_red: "Red",
+                nav_contacto: "Contacto",
+                hero_badge: "Ecosistema Editorial SENNOVA",
+                hero_title_1: "Investigación",
+                hero_title_2: "Textil & Diseño",
+                hero_title_3: "Vanguardia Científica",
+                hero_desc: "Bienvenidos a INNMODALAB (IML), el portal de divulgación científica arbitrada de alta indexación del Centro de Manufactura en Textil y Cuero del SENA.",
+                hero_search_placeholder: "Buscar por DOI, autor, wearable, biopolímeros...",
+                hero_search_btn: "Buscar",
+                hero_index_status: "Indexaciones activas:",
+                hero_view_abstract: "Ver Abstract",
+                about_section_title: "Sobre la Revista & Acerca de",
+                about_section_subtitle: "INNMODALAB es la vitrina científica dedicada al fomento de la innovación técnica aplicable del sector moda, confección, diseño y manufactura.",
+                about_box1_tag: "Misión de Divulgación",
+                about_box1_title: "Enfoque de Ciencia Abierta (Open Access)",
+                about_box1_desc: "Nuestra misión es potenciar y dar máxima visibilidad a la producción intelectual de instructores, aprendices, investigadores y semilleros de investigación asociados a las industrias creativas y manufactureras.",
+                about_box1_bullet1: "Conexión inmediata con catálogos internacionales.",
+                about_box1_bullet2: "Evaluación estricta bajo modelo por pares dobles ciegos.",
+                about_box1_bullet3: "Distribución libre bajo licencias Creative Commons.",
+                about_box2_tag: "Respaldo Metodológico",
+                about_box2_title: "Sello de Calidad SENNOVA",
+                about_box2_desc: "Nacidos bajo el amparo metodológico y financiero de SENNOVA, INNMODALAB actúa como la principal plataforma de difusión de patentes, prototipos de nanotecnología textil y ecodiseño creados en el Centro de Manufactura en Textil y Cuero.",
+                about_ethics_title: "Comité de Ética Científica",
+                about_ethics_desc: "Garantizando la transparencia y originalidad de cada paper.",
+                actual_badge: "Actualización Reciente",
+                actual_title: "Número Actual",
+                actual_subtitle: "Volumen 8, Número 1 (2026). Investigación aplicada y desarrollos disruptivos del semestre en curso.",
+                actual_p1_tag: "Textil & Moda",
+                actual_p1_title: "Modación superficial de fibras sintéticas con micropartículas antimicrobianas",
+                actual_p1_desc: "Estudio de funcionalización textil contra patógenos intrahospitalarios mediante recubrimientos moleculares ecológicos.",
+                actual_p2_tag: "Cuero & Calzado",
+                actual_p2_title: "Estudio biomecánico para calzado ortopédico infantil mediante modelado 3D",
+                actual_p2_desc: "Desarrollo de prototipos de suelas inteligentes impresas en poliuretano termoplástico adaptativo mediante manufactura aditiva.",
+                actual_p3_tag: "Economía Circular",
+                actual_p3_title: "Aprovechamiento de residuos de curtición de cuero como biopolímeros",
+                actual_p3_desc: "Aislamiento de colágeno industrial para la formulación de nuevos aglomerados biodegradables de diseño sustentable.",
+                actual_p_btn: "Ver PDF",
+                archives_title: "Números Anteriores",
+                archives_subtitle: "Historial completo de producción científica y volúmenes archivados para consulta bibliográfica libre.",
+                archives_th1: "Volumen / Año",
+                archives_th2: "Enfoque Técnico",
+                archives_th3: "Artículos",
+                archives_th4: "Indexación",
+                archives_th5: "Acción",
+                archives_manuscripts: "Manuscritos",
+                archives_r1_focus: "Automatización y Tintorería Eco-Eficiente",
+                archives_r2_focus: "Dispositivos IoT y Wearables Industriales",
+                archives_r3_focus: "Ergonomía de Procesos de Confección Pesada",
+                archives_view_btn: "Ver Índice",
+                announcements_title: "Avisos & Convocatorias Activas",
+                announcements_subtitle: "Manténgase al tanto de las llamadas del comité científico para la recepción de artículos.",
+                announcements_tag: "Call for Papers",
+                announcements_edition: "Edición Especial: Vol. 8, Edición 2 (Biopolímeros y Nuevos Materiales)",
+                announcements_desc: "Se encuentra abierta la recepción de manuscritos enfocados en economía circular, biotecnología vegetal, wearables e IoT y desarrollo sustentable aplicados a la moda.",
+                announcements_deadline: "Fecha Límite:",
+                announcements_rules: "Normas:",
+                announcements_btn: "Postular Artículo",
+                guidelines_title: "Directrices para Autores & Envíos",
+                guidelines_subtitle: "Instrucciones estructuradas y rigurosas para la postulación exitosa de sus manuscritos.",
+                guidelines_c1_title: "1. Formato IMRyD",
+                guidelines_c1_desc: "Todos los artículos de investigación deben seguir rígidamente la estructura estándar: Introducción, Metodología, Resultados y Discusión. Deben ser redactados bajo las vigentes directrices de citación APA de última versión.",
+                guidelines_c2_title: "2. Políticas Antiplagio",
+                guidelines_c2_desc: "Los textos postulados se someten de manera automática al software Turnitin de detección de similitudes de texto. El umbral máximo permitido de coincidencia directa o cita no idónea es del 15% para proceder a revisión.",
+                guidelines_c3_title: "3. Par Doble Ciego",
+                guidelines_c3_desc: "Evaluación neutral realizada por una terna de revisores técnicos expertos externos e internos en anonimato cruzado absoluto (Double-Blind Peer Review) para resguardar la imparcialidad científica y metodológica.",
+                team_title: "Equipo Editorial",
+                team_subtitle: "Nuestra gobernanza científica, integrada por destacados profesionales dedicados al fomento de la excelencia académica.",
+                team_editor_title: "Editor en Jefe",
+                team_editor_dept: "Centro de Manufactura en Textil y Cuero",
+                team_editor_desc: "Responsable de coordinar el flujo metodológico general, la asignación de revisores y la validación de indexaciones institucionales del SENA.",
+                team_committee_title: "Comité Científico Invitado",
+                team_committee_dept: "Investigadores Externos",
+                team_committee_desc: "Red multidisciplinar de Doctores y evaluadores adscritos a Minciencias e institutos de desarrollo textil internacionales de alta competitividad.",
+                library_title: "Integrados al Sistema de Bibliotecas SENA",
+                library_desc: "La producción intelectual e indexaciones de la revista INNMODALAB se interconectan con los repositorios nacionales institucionales y la red nacional de divulgación técnica.",
+                contact_title: "Canal de Correspondencia",
+                contact_subtitle: "Comuníquese de forma ágil y transparente con la mesa técnica y editorial de la revista.",
+                contact_lbl_name: "Nombre Completo",
+                contact_lbl_email: "Correo Institucional (Filiación)",
+                contact_lbl_msg: "Resumen del Manuscrito o Inquietud Técnica",
+                contact_placeholder_name: "Ej. Dr. Andrés Villamizar",
+                contact_placeholder_email: "Ej. avillamizar@sena.edu.co",
+                contact_placeholder_msg: "Por favor desglose el abstract conceptual, objetivos metodológicos e hipótesis de su propuesta de artículo...",
+                contact_btn: "Enviar Solicitud al Editor",
+                footer_brand_desc: "Portal científico indexado del Centro de Manufactura en Textil y Cuero. Publicación abierta y regulada de alta exigencia metodológica.",
+                footer_links_head: "Navegación OJS",
+                footer_lic_head: "Soporte Técnico & Licencias",
+                footer_lic_desc: "Sistemas integrados de código abierto para la gestión editorial global. Licencia Creative Commons Internacional 4.0.",
+                footer_copyright: "© 2026 Servicio Nacional de Aprendizaje (SENA) - SENNOVA. Todos los derechos reservados.",
+                footer_credits: "Diseñado bajo lineamientos de innovación institucional del SENA.",
+                toast_success_title: "Éxito",
+                toast_success_msg: "Operación realizada correctamente.",
+                toast_err_empty: "Búsqueda vacía",
+                toast_err_empty_msg: "Por favor, escribe un término para iniciar el rastreo en EBSCOhost.",
+                toast_search_ok: "EBSCOhost Encontrado",
+                toast_search_ok_msg: "Búsqueda exitosa. Se actualizó el abstract.",
+                toast_contact_title: "Mensaje Recibido",
+                toast_contact_msg: "¡Muchas gracias! Su manuscrito ha sido registrado temporalmente para revisión preliminar.",
+                toast_download_title: "Índice compilado",
+                toast_download_msg: "Generando vista previa del índice bibliográfico. Iniciando simulación de descarga...",
+                modal_abstract_header: "Resumen Académico (Abstract)",
+                modal_close_btn: "Entendido"
+            },
+            en: {
+                nav_inicio: "Home",
+                nav_sobre: "About the Journal",
+                nav_actual: "Current",
+                nav_anteriores: "Archives",
+                nav_avisos: "Announcements",
+                nav_directrices: "Guidelines",
+                nav_equipo: "Editorial Team",
+                nav_red: "Network",
+                nav_contacto: "Contact",
+                hero_badge: "SENNOVA Editorial Ecosystem",
+                hero_title_1: "Research in",
+                hero_title_2: "Textiles & Design",
+                hero_title_3: "Scientific Vanguard",
+                hero_desc: "Welcome to INNMODALAB (IML), the double-blind peer-reviewed scientific journal with high international indexing from the SENA Textile and Leather Manufacturing Center.",
+                hero_search_placeholder: "Search by DOI, author, wearable, biopolymers...",
+                hero_search_btn: "Search",
+                hero_index_status: "Active indexing databases:",
+                hero_view_abstract: "View Abstract",
+                about_section_title: "About the Journal",
+                about_section_subtitle: "INNMODALAB is the scientific showcase dedicated to promoting technical innovation in fashion, apparel, design, and manufacturing.",
+                about_box1_tag: "Dissemination Mission",
+                about_box1_title: "Open Access Approach",
+                about_box1_desc: "Our mission is to empower and give maximum visibility to the intellectual output of instructors, apprentices, researchers, and research groups associated with creative and manufacturing industries.",
+                about_box1_bullet1: "Immediate connection with global scientific catalogs.",
+                about_box1_bullet2: "Strict double-blind peer review evaluation model.",
+                about_box1_bullet3: "Free distribution protected under Creative Commons licensing.",
+                about_box2_tag: "Methodological Endorsement",
+                about_box2_title: "SENNOVA Quality Standard",
+                about_box2_desc: "Born under the methodological and financial framework of SENNOVA, INNMODALAB acts as the premier platform for publishing patents, textile nanotechnology prototypes, and eco-designs developed at our center.",
+                about_ethics_title: "Scientific Ethics Committee",
+                about_ethics_desc: "Ensuring maximum transparency and originality in every manuscript.",
+                actual_badge: "Recent Update",
+                actual_title: "Current Issue",
+                actual_subtitle: "Volume 8, Number 1 (2026). Applied research and disruptive developments for the ongoing academic term.",
+                actual_p1_tag: "Textiles & Fashion",
+                actual_p1_title: "Surface modification of synthetic fibers with antimicrobial microparticles",
+                actual_p1_desc: "A study on functionalizing textiles against hospital pathogens using eco-friendly molecular coatings.",
+                actual_p2_tag: "Leather & Footwear",
+                actual_p2_title: "Biomechanical study for child orthopedic footwear via 3D modeling",
+                actual_p2_desc: "Developing smart outsole prototypes printed in adaptive thermoplastic polyurethane using additive manufacturing.",
+                actual_p3_tag: "Circular Economy",
+                actual_p3_title: "Utilization of leather tanning residues as structural biopolymers",
+                actual_p3_desc: "Isolation of industrial collagen to formulate new sustainable and biodegradable composites for industrial design.",
+                actual_p_btn: "View PDF",
+                archives_title: "Back Issues",
+                archives_subtitle: "Complete repository of scientific papers and historical volumes archived for public bibliographical search.",
+                archives_th1: "Volume / Year",
+                archives_th2: "Technical Focus",
+                archives_th3: "Articles",
+                archives_th4: "Indexing",
+                archives_th5: "Action",
+                archives_manuscripts: "Manuscripts",
+                archives_r1_focus: "Automation and Eco-Efficient Textile Dyeing",
+                archives_r2_focus: "IoT Devices and Industrial Smart Wearables",
+                archives_r3_focus: "Process Ergonomics in Heavy Leather Apparel",
+                archives_view_btn: "View Index",
+                announcements_title: "Announcements & Active Call for Papers",
+                announcements_subtitle: "Stay updated with our scientific committee calls for original paper submissions.",
+                announcements_tag: "Call for Papers",
+                announcements_edition: "Special Issue: Vol. 8, Issue 2 (Biopolymers & New Materials)",
+                announcements_desc: "Submissions are open for research focused on circular economy, plant-based biotechnology, wearables, IoT, and sustainable design applied to fashion.",
+                announcements_deadline: "Deadline:",
+                announcements_rules: "Rules:",
+                announcements_btn: "Submit Article",
+                guidelines_title: "Guidelines for Authors & Submissions",
+                guidelines_subtitle: "Structured and rigorous instructions for the successful submission of your manuscripts.",
+                guidelines_c1_title: "1. IMRaD Format",
+                guidelines_c1_desc: "All original research articles must rigidly follow the standard structure: Introduction, Methodology, Results, and Discussion, adhering to the latest APA citation guidelines.",
+                guidelines_c2_title: "2. Anti-plagiarism Policies",
+                guidelines_c2_desc: "All submitted papers are automatically analyzed through Turnitin software. The maximum allowed direct similarity index is 15% to proceed to peer review.",
+                guidelines_c3_title: "3. Double-Blind Peer Review",
+                guidelines_c3_desc: "An objective evaluation conducted by three external and internal expert technical reviewers in absolute anonymity to guarantee scientific neutrality.",
+                team_title: "Editorial Board",
+                team_subtitle: "Our scientific governance, integrated by highly distinguished researchers committed to academic excellence.",
+                team_editor_title: "Editor-in-Chief",
+                team_editor_dept: "Textile and Leather Manufacturing Center",
+                team_editor_desc: "Responsible for coordinating the overall review pipeline, allocating reviewers, and validating national and international library indexings.",
+                team_committee_title: "Invited Scientific Committee",
+                team_committee_dept: "External Researchers",
+                team_committee_desc: "Multidisciplinary network of PhDs and peer reviewers accredited by Minciencias and world-class international textile research institutes.",
+                library_title: "Integrated into the SENA Library Network",
+                library_desc: "The intellectual production and metadata indexings of INNMODALAB are fully interconnected with the national institutional repositories and technical dissemination networks.",
+                contact_title: "Editorial Correspondence Channel",
+                contact_subtitle: "Communicate directly and transparently with our technical desk and editorial office.",
+                contact_lbl_name: "Full Name",
+                contact_lbl_email: "Institutional Email (Affiliation)",
+                contact_lbl_msg: "Manuscript Abstract or Technical Inquiry",
+                contact_placeholder_name: "e.g. Dr. Andrew Villamizar",
+                contact_placeholder_email: "e.g. avillamizar@sena.edu.co",
+                contact_placeholder_msg: "Please summarize the conceptual abstract, methodological goals, and main hypothesis of your paper proposal...",
+                contact_btn: "Send Inquiry to Editor",
+                footer_brand_desc: "Indexed scientific portal of the Textile and Leather Manufacturing Center. Open-access peer-reviewed publication of high academic standards.",
+                footer_links_head: "OJS Navigation",
+                footer_lic_head: "Technical Support & Licenses",
+                footer_lic_desc: "Integrated open-source software for global editorial workflows. Protected under International Creative Commons Licensing 4.0.",
+                footer_copyright: "© 2026 Servicio Nacional de Aprendizaje (SENA) - SENNOVA. All rights reserved.",
+                footer_credits: "Designed under the official institutional innovation guidelines of SENA.",
+                toast_success_title: "Success",
+                toast_success_msg: "Operation executed successfully.",
+                toast_err_empty: "Empty query",
+                toast_err_empty_msg: "Please write a search term to trigger the EBSCOhost scan.",
+                toast_search_ok: "EBSCOhost Database Match",
+                toast_search_ok_msg: "Search successful. Updated abstract loaded.",
+                toast_contact_title: "Message Received",
+                toast_contact_msg: "Thank you! Your abstract has been temporarily logged for preliminary review.",
+                toast_download_title: "Index Compiled",
+                toast_download_msg: "Compiling bibliographic index preview. Initiating download emulation...",
+                modal_abstract_header: "Academic Abstract",
+                modal_close_btn: "Got it"
+            }
+        };
+
+        // Active Language State (defaults to 'es')
+        let currentLang = localStorage.getItem('innmodalab_lang') || 'es';
+
+        // Apply translations on load
+        function applyTranslations() {
+            const dictionary = i18n[currentLang];
+            
+            // Translate direct data-i18n attributes
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (dictionary[key]) {
+                    element.innerText = dictionary[key];
+                }
+            });
+
+            // Translate special dynamic static texts
+            document.getElementById('heroDescText').innerHTML = currentLang === 'es' 
+                ? `Bienvenidos a <strong class="text-white">INNMODALAB</strong> (IML), el portal de divulgación científica arbitrada de alta indexación del Centro de Manufactura en Textil y Cuero del SENA.`
+                : `Welcome to <strong class="text-white">INNMODALAB</strong> (IML), the double-blind peer-reviewed scientific journal with high international indexing from the SENA Textile and Leather Manufacturing Center.`;
+
+            document.getElementById('libraryDescText').innerHTML = currentLang === 'es'
+                ? `La producción intelectual e indexaciones de la revista <strong class="text-white">INNMODALAB</strong> se interconectan con los repositorios nacionales institucionales y la red nacional de divulgación técnica.`
+                : `The intellectual production and metadata indexings of <strong class="text-white">INNMODALAB</strong> are fully interconnected with the national institutional repositories and technical dissemination networks.`;
+
+            // Translate placeholders
+            document.getElementById('ebscoQuery').setAttribute('placeholder', dictionary.hero_search_placeholder);
+            document.getElementById('contactName').setAttribute('placeholder', dictionary.contact_placeholder_name);
+            document.getElementById('contactEmail').setAttribute('placeholder', dictionary.contact_placeholder_email);
+            document.getElementById('contactMsg').setAttribute('placeholder', dictionary.contact_placeholder_msg);
+
+            // Update specific text nodes inside dynamic cards if not overridden by search
+            if (searchStep === 0) {
+                if (currentLang === 'es') {
+                    document.getElementById('cardTag').innerText = "Textil Inteligente";
+                    document.getElementById('cardTitle').innerText = "Wearables flexosensores aplicados al vestuario ergonómico laboral";
+                    document.getElementById('cardExcerpt').innerText = "Estudio empírico de captura telemétrica de movimiento para la prevención de riesgos ergonómicos de operarios en manufactura textil.";
+                } else {
+                    document.getElementById('cardTag').innerText = "Smart Textiles";
+                    document.getElementById('cardTitle').innerText = "Flexosensor wearables applied to ergonomic occupational clothing";
+                    document.getElementById('cardExcerpt').innerText = "Empirical study of telemetric motion capture for the prevention of ergonomic risks of operators in textile manufacturing.";
+                }
+            }
+
+            // Update Articles Section texts
+            if (currentLang === 'es') {
+                document.getElementById('actualP1Title').innerText = "Modificación superficial de fibras sintéticas con micropartículas antimicrobianas";
+                document.getElementById('actualP1Desc').innerText = "Estudio de funcionalización textil contra patógenos intrahospitalarios mediante recubrimientos moleculares ecológicos.";
+                
+                document.getElementById('actualP2Title').innerText = "Estudio biomecánico para calzado ortopédico infantil mediante modelado 3D";
+                document.getElementById('actualP2Desc').innerText = "Desarrollo de prototipos de suelas inteligentes impresas en poliuretano termoplástico adaptativo mediante manufactura aditiva.";
+
+                document.getElementById('actualP3Title').innerText = "Aprovechamiento de residuos de curtición de cuero como biopolímeros";
+                document.getElementById('actualP3Desc').innerText = "Aislamiento de colágeno industrial para la formulación de nuevos aglomerados biodegradables de diseño sustentable.";
+            } else {
+                document.getElementById('actualP1Title').innerText = "Surface modification of synthetic fibers with antimicrobial microparticles";
+                document.getElementById('actualP1Desc').innerText = "Textile functionalization research against intra-hospital pathogens using organic molecular coatings.";
+
+                document.getElementById('actualP2Title').innerText = "Biomechanical study for orthopedic children footwear via 3D modeling";
+                document.getElementById('actualP2Desc').innerText = "Development of smart outsole prototypes printed in adaptive thermoplastic polyurethane via additive manufacturing.";
+
+                document.getElementById('actualP3Title').innerText = "Revalorization of leather tanning shavings as structural biopolymers";
+                document.getElementById('actualP3Desc').innerText = "Industrial collagen extraction for the formulation of new biodegradable composites with sustainable design.";
+            }
+
+            // Update UI switch badges
+            document.getElementById('currentLangDesktop').innerText = currentLang.toUpperCase();
+            document.getElementById('currentLangMobileHead').innerText = currentLang.toUpperCase();
+
+            // Translate static modal tags
+            document.getElementById('modalAbstractHeader').innerText = dictionary.modal_abstract_header;
+            document.getElementById('modalCloseBtnText').innerText = dictionary.modal_close_btn;
+        }
+
+        // Toggle Language Action
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            localStorage.setItem('innmodalab_lang', currentLang);
+            applyTranslations();
+            
+            const titles = { es: "Idioma actualizado", en: "Language Updated" };
+            const messages = { es: "Se ha cambiado la interfaz al Español.", en: "The portal interface is now set to English." };
+            showToast(titles[currentLang], messages[currentLang], true);
+        }
+
+        // EBSCOhost Mock Search Database & Logic (Bilingual entries)
+        const database = {
+            es: [
+                {
+                    title: "Desarrollo de biopolímeros biodegradables a partir de almidón de yuca",
+                    tag: "Economía Circular",
+                    doi: "10.5281/iml.v8i1.155",
+                    excerpt: "Formulación de películas flexibles bioplásticas para empaques biodegradables de prendas de vestir de alta costura.",
+                    volume: "Vol. 8 Núm. 1 (2026)"
+                },
+                {
+                    title: "Algoritmos de visión artificial para control de calidad en líneas de costura",
+                    tag: "Moda & Automatización",
+                    doi: "10.5281/iml.v8i1.229",
+                    excerpt: "Detección automatizada de puntadas defectuosas mediante redes neuronales convolucionales embebidas en microcontroladores.",
+                    volume: "Vol. 8 Núm. 1 (2026)"
+                },
+                {
+                    title: "Análisis ergonómico postural de operarios del sector calzado y marroquinería",
+                    tag: "Salud Ocupacional",
+                    doi: "10.5281/iml.v7i2.102",
+                    excerpt: "Monitoreo fisiológico por telemetría flexosensora inalámbrica para corrección de posturas forzadas en manufactura manual.",
+                    volume: "Vol. 7 Núm. 2 (2025)"
+                }
+            ],
+            en: [
+                {
+                    title: "Development of biodegradable biopolymers from cassava starch",
+                    tag: "Circular Economy",
+                    doi: "10.5281/iml.v8i1.155",
+                    excerpt: "Formulation of bioplastic flexible films for biodegradable packaging of high fashion garments.",
+                    volume: "Vol. 8 No. 1 (2026)"
+                },
+                {
+                    title: "Computer vision algorithms for quality control on stitching lines",
+                    tag: "Fashion & Automation",
+                    doi: "10.5281/iml.v8i1.229",
+                    excerpt: "Automated detection of defective stitches via convolutional neural networks embedded in microcontrollers.",
+                    volume: "Vol. 8 No. 1 (2026)"
+                },
+                {
+                    title: "Ergonomic postural analysis of operators in footwear and leather tanneries",
+                    tag: "Occupational Health",
+                    doi: "10.5281/iml.v7i2.102",
+                    excerpt: "Physiological monitoring via wireless flexosensor telemetry for postural corrections in manual manufacturing processes.",
+                    volume: "Vol. 7 No. 2 (2025)"
+                }
+            ]
+        };
+
+        let searchStep = 0;
+
+        function simulateEbscoSearch() {
+            const query = document.getElementById('ebscoQuery').value.trim();
+            const dict = i18n[currentLang];
+
+            if (query === '') {
+                showToast(dict.toast_err_empty, dict.toast_err_empty_msg, false);
+                return;
+            }
+
+            const match = database[currentLang][searchStep % database[currentLang].length];
+            const card = document.getElementById('dynamicCard');
+
+            // Quick smooth fade-out animation
+            card.style.transform = 'scale(0.95)';
+            card.style.opacity = '0.3';
+
+            setTimeout(() => {
+                document.getElementById('cardTitle').innerText = match.title;
+                document.getElementById('cardExcerpt').innerText = match.excerpt;
+                document.getElementById('cardDoi').innerText = `DOI: ${match.doi}`;
+                document.getElementById('cardVolume').innerText = match.volume;
+                document.getElementById('cardTag').innerText = match.tag;
+
+                // Reset and spring back card animations
+                card.style.transform = 'scale(1)';
+                card.style.opacity = '1';
+
+                showToast(dict.toast_search_ok, `"${query}" - ${dict.toast_search_ok_msg}`, true);
+            }, 350);
+
+            searchStep++;
+        }
+
+        // Custom Scientific Modal Data & Logic (Bilingual entries)
+        const papersInfo = {
+            es: {
+                'first-paper': {
+                    title: "Wearables flexosensores aplicados al vestuario ergonómico laboral",
+                    doi: "10.5281/iml.v8i1.124",
+                    tag: "Textil Inteligente",
+                    volume: "Vol. 8 Núm. 1 (2026)",
+                    abstract: "La presente investigación aborda el diseño y desarrollo de una prenda de vestir instrumentada con sensores resistivos flexibles (flexosensores) para el monitoreo continuo de posturas de la columna vertebral en entornos de manufactura. A través de un sistema telemétrico inalámbrico de bajo consumo, se registran los ángulos de flexión lumbar en tiempo real, permitiendo identificar movimientos de sobreesfuerzo postural y alertar precozmente al operario. Los ensayos preliminares demuestran una correlación del 92% con sistemas ópticos tradicionales."
+                },
+                'paper-1': {
+                    title: "Modificación superficial de fibras sintéticas con micropartículas antimicrobianas",
+                    doi: "10.5281/iml.01",
+                    tag: "Textil & Moda",
+                    volume: "Vol. 8 Núm. 1 (2026)",
+                    abstract: "Este estudio reporta la impregnación física y enlaces moleculares en superficies de poliéster utilizando nanopartículas de óxido de zinc (ZnO) estabilizadas en soluciones acuosas biodegradables. Se evaluaron las capacidades antimicrobianas del tejido resultante frente a cultivos de cepas bacterianas comunes intrahospitalarias. Los resultados demuestran una reducción de la presencia biológica superior al 99.8% incluso después de someter las muestras a ciclos agresivos de lavado mecánico."
+                },
+                'paper-2': {
+                    title: "Estudio biomecánico para calzado ortopédico infantil mediante modelado 3D",
+                    doi: "10.5281/iml.02",
+                    tag: "Cuero & Calzado",
+                    volume: "Vol. 8 Núm. 1 (2026)",
+                    abstract: "Se presenta un modelo metodológico de personalización de calzado terapéutico utilizando escaneo óptico 3D no invasivo y modelado por elementos finitos. La optimización del soporte plantar se logra distribuyendo las cargas dinámicas mediante la impresión tridimensional (FDM) de plantillas con TPU (Poliuretano termoplástico) de densidad variable. Los ensayos de marcha con podobarografía demuestran una mejora sustancial en la estabilización de los vectores de fuerza plantar."
+                },
+                'paper-3': {
+                    title: "Aprovechamiento de residuos de curtición de cuero como biopolímeros",
+                    doi: "10.5281/iml.03",
+                    tag: "Economía Circular",
+                    volume: "Vol. 8 Núm. 1 (2026)",
+                    abstract: "La investigación se centra en la revalorización de los virutas de cuero resultantes del proceso de rebajado (curtición) para extraer colágeno estructural tipo I. Mediante un tratamiento hidrolítico catalítico controlado, se obtuvo una matriz proteica que al combinarse con plastificantes naturales formó películas biopoliméricas consistentes. Estas láminas biodegradables demuestran propiedades de tensión idóneas para ser utilizadas como recubrimientos alternativos de baja huella ecológica."
+                }
+            },
+            en: {
+                'first-paper': {
+                    title: "Flexosensor wearables applied to ergonomic occupational clothing",
+                    doi: "10.5281/iml.v8i1.124",
+                    tag: "Smart Textiles",
+                    volume: "Vol. 8 No. 1 (2026)",
+                    abstract: "The present research addresses the design and development of an instrumented garment embedded with flexible resistive sensors (flexosensors) for the continuous posture monitoring of the spine in industrial workspaces. Through a low-power wireless telemetry system, lumbar flexion angles are recorded in real-time, identifying overexertion movements and alerting operators. Preliminary trials show a 92% correlation with traditional gold-standard optical tracking systems."
+                },
+                'paper-1': {
+                    title: "Surface modification of synthetic fibers with antimicrobial microparticles",
+                    doi: "10.5281/iml.01",
+                    tag: "Textiles & Fashion",
+                    volume: "Vol. 8 No. 1 (2026)",
+                    abstract: "This study reports physical impregnation and molecular bonding on polyester surfaces using zinc oxide (ZnO) nanoparticles stabilized in aqueous biodegradable media. Antimicrobial efficacy of the resulting fabric was assessed against common hospital bacterial strains. Results show a reduction in biological presence exceeding 99.8% even after exposing the textiles to aggressive machine washing cycles."
+                },
+                'paper-2': {
+                    title: "Biomechanical study for child orthopedic footwear via 3D modeling",
+                    doi: "10.5281/iml.02",
+                    tag: "Leather & Footwear",
+                    volume: "Vol. 8 No. 1 (2026)",
+                    abstract: "A methodological framework of therapeutic shoe customization using non-invasive 3D scanning and finite element modeling is presented. Plantar support optimization is achieved by distributing dynamic loads through 3D printing (FDM) of variable-density TPU (thermoplastic polyurethane) insoles. Post-fitting baropodometric walk tests show massive enhancement in stable gait and pressure dispersion."
+                },
+                'paper-3': {
+                    title: "Utilization of leather tanning residues as structural biopolymers",
+                    doi: "10.5281/iml.03",
+                    tag: "Circular Economy",
+                    volume: "Vol. 8 No. 1 (2026)",
+                    abstract: "This research focuses on the revalorization of wet-blue leather shavings resulting from the shaving process to extract structural type-I collagen. Controlled catalytic hydrolysis yielded a stable protein matrix which, when combined with natural plasticizers, formed consistent biopolymer films. These biodegradable sheets demonstrate optimal tensile properties, proving viable as ecological protective wraps with low carbon footprints."
+                }
+            }
+        };
+
+        function showDetailsModal(key) {
+            const data = papersInfo[currentLang][key] || papersInfo[currentLang]['first-paper'];
+            const modal = document.getElementById('scientificModal');
+            const inner = modal.firstElementChild;
+
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalDoi').innerText = `DOI: ${data.doi}`;
+            document.getElementById('modalTag').innerText = data.tag;
+            document.getElementById('modalVolume').innerText = `INNMODALAB - ${data.volume}`;
+            document.getElementById('modalAbstract').innerText = data.abstract;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                inner.classList.remove('scale-95', 'opacity-0');
+                inner.classList.add('scale-100', 'opacity-100');
+            }, 50);
+        }
+
+        function closeDetailsModal() {
+            const modal = document.getElementById('scientificModal');
+            const inner = modal.firstElementChild;
+
+            inner.classList.remove('scale-100', 'opacity-100');
+            inner.classList.add('scale-95', 'opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 250);
+        }
+
+        // Simulating editorial contact form submission
+        function handleContactSubmit() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const dict = i18n[currentLang];
+
+            // Simple clearing
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMsg').value = '';
+
+            showToast(dict.toast_contact_title, `${dict.toast_contact_msg} (Filiación: ${email})`, true);
+        }
+
+        // Simulating indexing table PDF index generation
+        function simulatePdfDownload(volName) {
+            const dict = i18n[currentLang];
+            showToast(dict.toast_download_title, `${dict.toast_download_msg} -> "${volName}"`, true);
+        }
+
+        // Scroll Reveal Implementation (IntersectionObserver)
+        const reveals = document.querySelectorAll('.reveal');
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(el => scrollObserver.observe(el));
+
+        // Smooth active navbar links update on scroll
+        const sections = document.querySelectorAll('section, header');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 250)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Run translation system immediately on DOM load
+        window.onload = function() {
+            applyTranslations();
+        };
+    </script>
+</body>
+</html>
