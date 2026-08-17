@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INNMODA-CMTC | Investigación + Desarrollo + Innovación (I+D+I)</title>
-    <meta name="description" content="Portal Institucional INNMODA-CMTC del Centro de Manufactura en Textil y Cuero del SENA. Espacio de Investigación, Desarrollo e Innovación (I+D+I).">
+    <title id="pageTitle">INNMODA-CMTC | Investigación + Desarrollo + Innovación (I+D+I)</title>
+    <meta id="pageMetaDesc" name="description" content="Portal Institucional INNMODA-CMTC del Centro de Manufactura en Textil y Cuero del SENA. Espacio de Investigación, Desarrollo e Innovación (I+D+I).">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -40,10 +40,18 @@
     </script>
 
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: #02050e;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+        }
+
+        /* Offset para que el menú fijo no tape los encabezados al deslizar */
+        section {
+            scroll-margin-top: 5.5rem;
         }
 
         .ambient-aurora {
@@ -78,7 +86,7 @@
             transform: translateY(0);
         }
 
-        /* Estilo de Degradado para Menú Activo o Hover */
+        /* Estilo de Degradado para Menú Activo */
         .nav-gradient-text {
             background: linear-gradient(90deg, #39A900 0%, #06b6d4 100%);
             -webkit-background-clip: text;
@@ -88,6 +96,18 @@
 
         .nav-gradient-line {
             background: linear-gradient(90deg, #39A900 0%, #06b6d4 100%);
+        }
+
+        /* Clase de Item Activo Dinámico */
+        .nav-item-active {
+            background: linear-gradient(90deg, #39A900 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-item-active .nav-indicator {
+            width: 100% !important;
         }
 
         ::-webkit-scrollbar {
@@ -112,82 +132,89 @@
     <div class="ambient-aurora w-[500px] h-[500px] bg-cyber-lavender top-[35%] left-[-10%]"></div>
     <div class="ambient-aurora w-[600px] h-[600px] bg-cyber-cyan bottom-[-5%] right-[5%]"></div>
 
-    <!-- NAVEGACIÓN INSTITUCIONAL RESPONSIVE CON EFECTOS DEGRADADOS -->
+    <!-- NAVEGACIÓN INSTITUCIONAL -->
     <nav class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-cyber-border transition-all duration-300" id="mainNavbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+        <div class="w-full max-w-[1500px] mx-auto px-3 sm:px-5 lg:px-6">
+            <div class="flex items-center justify-between h-20 gap-2">
                 <!-- Branding SENA + INNMODA-CMTC -->
-                <a href="#inicio" class="flex items-center gap-3 group">
-                    <img src="./IMG/sena.png" alt="SENA Logo" class="h-10 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/83/SENA_logo.svg'">
-                    <div class="h-7 w-[1px] bg-cyber-border"></div>
-                    <div class="flex flex-col">
-                        <span class="font-title font-bold text-lg text-white tracking-wide">INNMODA-CMTC</span>
-                        <span class="text-[10px] text-cyber-mint font-semibold uppercase tracking-widest">I+D+I SENA</span>
+                <a href="#inicio" class="flex items-center gap-2.5 group flex-shrink-0">
+                    <img src="./IMG/sena.png" alt="SENA Logo" class="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/83/SENA_logo.svg'">
+                    <div class="h-7 w-[1px] bg-cyber-border hidden sm:block"></div>
+                    <div class="flex flex-col whitespace-nowrap">
+                        <span class="font-title font-bold text-base sm:text-lg text-white tracking-tight sm:tracking-wide">INNMODA-CMTC</span>
+                        <span class="text-[9px] sm:text-[10px] text-cyber-mint font-semibold uppercase tracking-widest whitespace-nowrap" data-i18n="nav_brand_sub">I+D+I SENA</span>
                     </div>
                 </a>
 
-                <!-- Menú Escritorio con Degradados -->
-                <div class="hidden xl:flex items-center gap-2">
-                    <a href="#inicio" class="relative text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2 transition-all group">
-                        Inicio
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
+                <!-- Menú Escritorio Adaptable (Inicio, Qué hacemos, Grupo de investigación, Semilleros, I+D+I, Nuestros proyectos, Revistas, Contacto) -->
+                <div class="hidden xl:flex items-center gap-1" id="desktopNavLinks">
+                    <a href="#inicio" class="nav-item relative text-[11px] 2xl:text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-1.5 transition-all group whitespace-nowrap nav-item-active">
+                        <span data-i18n="nav_home">Inicio</span>
+                        <span class="nav-indicator absolute bottom-0 left-0 w-full h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="#que-hacemos" class="relative text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2 transition-all group">
-                        Proyecto
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
+                    <a href="#que-hacemos" class="nav-item relative text-[11px] 2xl:text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-1.5 transition-all group whitespace-nowrap">
+                        <span data-i18n="nav_what_we_do">Que hacemos</span>
+                        <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="#grupo-investigacion" class="relative text-[12px] font-semibold uppercase tracking-wider nav-gradient-text px-3 py-2 transition-all group">
-                        Características
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 nav-gradient-line transition-all duration-300"></span>
+                    <a href="#grupo-investigacion" class="nav-item relative text-[11px] 2xl:text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-1.5 transition-all group whitespace-nowrap">
+                        <span data-i18n="nav_groups">Grupo de investigacion</span>
+                        <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="#semilleros" class="relative text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2 transition-all group">
-                        Innovación
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
+                    <a href="#semilleros" class="nav-item relative text-[11px] 2xl:text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-1.5 transition-all group whitespace-nowrap">
+                        <span data-i18n="nav_hotbeds">Semilleros</span>
+                        <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="#idi" class="relative text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2 transition-all group">
-                        Tecnologías
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
+                    <a href="#idi" class="nav-item relative text-[11px] 2xl:text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-1.5 transition-all group whitespace-nowrap">
+                        <span data-i18n="nav_idi">I+D+I</span>
+                        <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="#proyectos" class="relative text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2 transition-all group">
-                        Beneficios
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
+                    <a href="#proyectos" class="nav-item relative text-[11px] 2xl:text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-1.5 transition-all group whitespace-nowrap">
+                        <span data-i18n="nav_projects">Nuestros proyectos</span>
+                        <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="#" class="relative text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2 transition-all group">
-                        Galería
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
+                    <button onclick="openRevistasModal()" class="nav-item relative text-[11px] 2xl:text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-1.5 transition-all group whitespace-nowrap flex items-center gap-1">
+                        <i data-lucide="book-open" class="w-3.5 h-3.5 text-slate-300"></i>
+                        <span data-i18n="nav_magazines">Revistas</span>
+                        <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
+                    </button>
+                    <a href="#contacto" class="nav-item relative text-[11px] 2xl:text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-2.5 py-1.5 transition-all group whitespace-nowrap">
+                        <span data-i18n="nav_contact">Contacto</span>
+                        <span class="nav-indicator absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="#equipo" class="relative text-[12px] font-semibold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2 transition-all group">
-                        Equipo
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 nav-gradient-line transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="#contacto" class="relative text-[12px] font-semibold uppercase tracking-wider nav-gradient-text px-3 py-2 transition-all group ml-1">
-                        Contacto
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 nav-gradient-line transition-all duration-300"></span>
-                    </a>
+
+                    <!-- Selector de idioma ES / EN Escritorio -->
+                    <div class="ml-2 flex items-center bg-slate-900/90 border border-cyber-border rounded-lg p-0.5 shrink-0">
+                        <button onclick="setLanguage('es')" id="btnLangEs" class="px-2 py-0.5 text-xs font-bold rounded text-cyber-mint bg-slate-800 transition-colors">ES</button>
+                        <button onclick="setLanguage('en')" id="btnLangEn" class="px-2 py-0.5 text-xs font-bold rounded text-slate-400 hover:text-white transition-colors">EN</button>
+                    </div>
                 </div>
 
-                <!-- Botón Hamburguesa Móvil -->
-                <div class="xl:hidden flex items-center">
-                    <button id="mobileMenuBtn" aria-label="Abrir Menú" class="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 focus:outline-none focus:ring-2 focus:ring-cyber-mint">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
+                <!-- Botones Móviles / Tablets (< 1280px) -->
+                <div class="xl:hidden flex items-center gap-2">
+                    <div class="flex items-center bg-slate-900/90 border border-cyber-border rounded-lg p-0.5 shrink-0">
+                        <button onclick="setLanguage('es')" id="btnLangEsMobile" class="px-2 py-0.5 text-xs font-bold rounded text-cyber-mint bg-slate-800 transition-colors">ES</button>
+                        <button onclick="setLanguage('en')" id="btnLangEnMobile" class="px-2 py-0.5 text-xs font-bold rounded text-slate-400 hover:text-white transition-colors">EN</button>
+                    </div>
+                    <button id="mobileMenuBtn" aria-label="Abrir Menú" class="p-2 rounded-lg text-slate-300 hover:text-white bg-slate-900/70 border border-cyber-border focus:outline-none focus:ring-2 focus:ring-cyber-mint">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Menú Desplegable Móvil -->
-        <div id="mobileMenu" class="hidden xl:hidden border-t border-cyber-border bg-cyber-dark/95 backdrop-blur-xl">
-            <div class="px-4 py-5 space-y-2">
-                <a href="#inicio" class="block text-sm font-semibold text-slate-200 hover:text-white py-2">Inicio</a>
-                <a href="#que-hacemos" class="block text-sm font-semibold text-slate-200 hover:text-white py-2">Proyecto</a>
-                <a href="#grupo-investigacion" class="block text-sm font-semibold nav-gradient-text py-2">Características</a>
-                <a href="#semilleros" class="block text-sm font-semibold text-slate-200 hover:text-white py-2">Innovación</a>
-                <a href="#idi" class="block text-sm font-semibold text-slate-200 hover:text-white py-2">Tecnologías</a>
-                <a href="#proyectos" class="block text-sm font-semibold text-slate-200 hover:text-white py-2">Beneficios</a>
-                <a href="#" class="block text-sm font-semibold text-slate-200 hover:text-white py-2">Galería</a>
-                <a href="#equipo" class="block text-sm font-semibold text-slate-200 hover:text-white py-2">Equipo</a>
-                <a href="#contacto" class="block text-sm font-semibold nav-gradient-text py-2">Contacto</a>
-            </div>
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobileMenu" class="hidden xl:hidden border-t border-cyber-border bg-cyber-dark/95 backdrop-blur-xl px-4 py-4 space-y-1.5">
+            <a href="#inicio" class="mobile-nav-item block text-xs font-semibold uppercase tracking-wider text-slate-200 hover:text-cyber-mint py-2" data-i18n="nav_home">Inicio</a>
+            <a href="#que-hacemos" class="mobile-nav-item block text-xs font-semibold uppercase tracking-wider text-slate-200 hover:text-cyber-mint py-2" data-i18n="nav_what_we_do">Que hacemos</a>
+            <a href="#grupo-investigacion" class="mobile-nav-item block text-xs font-semibold uppercase tracking-wider text-slate-200 hover:text-cyber-mint py-2" data-i18n="nav_groups">Grupo de investigacion</a>
+            <a href="#semilleros" class="mobile-nav-item block text-xs font-semibold uppercase tracking-wider text-slate-200 hover:text-cyber-mint py-2" data-i18n="nav_hotbeds">Semilleros</a>
+            <a href="#idi" class="mobile-nav-item block text-xs font-semibold uppercase tracking-wider text-slate-200 hover:text-cyber-mint py-2" data-i18n="nav_idi">I+D+I</a>
+            <a href="#proyectos" class="mobile-nav-item block text-xs font-semibold uppercase tracking-wider text-slate-200 hover:text-cyber-mint py-2" data-i18n="nav_projects">Nuestros proyectos</a>
+            <button onclick="openRevistasModal(); mobileMenu.classList.add('hidden');" class="flex items-center gap-2 w-full text-left text-xs font-semibold uppercase tracking-wider text-slate-200 hover:text-cyber-mint py-2" data-i18n="nav_magazines">
+                <i data-lucide="book-open" class="w-4 h-4 text-cyber-mint"></i>
+                <span>Revistas</span>
+            </button>
+            <a href="#contacto" class="mobile-nav-item block text-xs font-semibold uppercase tracking-wider text-slate-200 hover:text-cyber-mint py-2" data-i18n="nav_contact">Contacto</a>
         </div>
     </nav>
 
@@ -198,24 +225,29 @@
                 
                 <div class="lg:col-span-7 space-y-6">
                     <div class="inline-flex items-center gap-2 bg-cyber-mint/10 border border-cyber-mint/25 px-4 py-1.5 rounded-full text-cyber-mint text-xs sm:text-sm font-bold tracking-wider uppercase">
-                        <i data-lucide="award" class="w-4 h-4"></i> SENA - Centro de Manufactura en Textil y Cuero
+                        <i data-lucide="award" class="w-4 h-4"></i> <span data-i18n="hero_badge">SENA - Centro de Manufactura en Textil y Cuero</span>
                     </div>
                     
-                    <h1 class="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight leading-tight text-white font-title">
-                        INNMODA-CMTC <br>
-                        <span class="bg-gradient-to-r from-white via-cyber-mint to-cyan-400 bg-clip-text text-transparent">Investigación + Desarrollo + Innovación</span>
-                    </h1>
+                    <div class="space-y-4">
+                        <h1 class="text-5xl sm:text-6xl xl:text-7xl font-black tracking-tight font-title text-white leading-none">
+                            INNMODA-CMTC
+                        </h1>
+                        <div class="flex flex-col space-y-1.5 font-title font-bold text-xl sm:text-2xl xl:text-3xl leading-snug tracking-wide uppercase">
+                            <span class="text-white block" data-i18n="hero_research">INVESTIGACION</span>
+                            <span class="text-cyber-mint block pl-6 sm:pl-10" data-i18n="hero_development">+ DESARROLLO</span>
+                            <span class="text-cyber-cyan block pl-12 sm:pl-20" data-i18n="hero_innovation">+ INNOVACION</span>
+                        </div>
+                    </div>
                     
-                    <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
+                    <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl" data-i18n="hero_description">
                         Espacio institucional del Centro de Manufactura en Textil y Cuero para promover el avance científico, tecnológico y la innovación aplicada (I+D+I) en las industrias de la moda, calzado y manufactura.
                     </p>
 
-                    <!-- Botón VER REVISTAS -->
                     <div class="pt-4 flex flex-wrap gap-4 items-center">
                         <button onclick="openRevistasModal()" class="bg-cyber-mint hover:bg-emerald-600 text-white font-extrabold px-8 py-4 rounded-xl transition-all duration-300 flex items-center gap-3 shadow-lg shadow-cyber-mint/20 text-sm tracking-wider uppercase">
-                            <i data-lucide="book-open" class="w-5 h-5"></i> VER REVISTAS
+                            <i data-lucide="book-open" class="w-5 h-5"></i> <span data-i18n="hero_btn_magazines">VER REVISTAS</span>
                         </button>
-                        <a href="#que-hacemos" class="bg-slate-900/80 hover:bg-slate-800 border border-cyber-border text-slate-200 font-bold px-6 py-4 rounded-xl transition-all text-sm tracking-wider uppercase">
+                        <a href="#que-hacemos" class="bg-slate-900/80 hover:bg-slate-800 border border-cyber-border text-slate-200 font-bold px-6 py-4 rounded-xl transition-all text-sm tracking-wider uppercase" data-i18n="hero_btn_activities">
                             Conocer Actividades
                         </a>
                     </div>
@@ -228,23 +260,23 @@
                             <span class="text-xs font-mono text-slate-400">CMTC - Bogotá</span>
                         </div>
                         <div class="space-y-3">
-                            <h2 class="text-2xl font-bold text-white font-title">Ecosistema I+D+I</h2>
-                            <p class="text-xs text-slate-300 leading-relaxed">
+                            <h2 class="text-2xl font-bold text-white font-title" data-i18n="hero_card_title">Ecosistema I+D+I</h2>
+                            <p class="text-xs text-slate-300 leading-relaxed" data-i18n="hero_card_desc">
                                 Articulación de capacidades de investigación aplicada, desarrollo experimental y transferencia tecnológica para dinamizar la cadena productiva del centro.
                             </p>
                         </div>
                         <div class="grid grid-cols-3 gap-2 text-center pt-2">
                             <div class="p-3 bg-slate-950/60 rounded-xl border border-cyber-border">
                                 <span class="block text-cyber-mint font-extrabold text-lg">I</span>
-                                <span class="text-[10px] text-slate-400 font-semibold uppercase">Investigación</span>
+                                <span class="text-[10px] text-slate-400 font-semibold uppercase" data-i18n="hero_card_r">Investigación</span>
                             </div>
                             <div class="p-3 bg-slate-950/60 rounded-xl border border-cyber-border">
                                 <span class="block text-cyber-cyan font-extrabold text-lg">D</span>
-                                <span class="text-[10px] text-slate-400 font-semibold uppercase">Desarrollo</span>
+                                <span class="text-[10px] text-slate-400 font-semibold uppercase" data-i18n="hero_card_d">Desarrollo</span>
                             </div>
                             <div class="p-3 bg-slate-950/60 rounded-xl border border-cyber-border">
                                 <span class="block text-cyber-lavender font-extrabold text-lg">I</span>
-                                <span class="text-[10px] text-slate-400 font-semibold uppercase">Innovación</span>
+                                <span class="text-[10px] text-slate-400 font-semibold uppercase" data-i18n="hero_card_i">Innovación</span>
                             </div>
                         </div>
                     </div>
@@ -257,8 +289,8 @@
     <!-- QUÉ HACEMOS -->
     <section id="que-hacemos" class="py-20 reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-cyber-border">
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white">QUÉ HACEMOS</h2>
-            <p class="mt-3 text-slate-400 text-sm sm:text-base">Ejes estratégicos del grupo para el fortalecimiento científico del sector manufacturero.</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white uppercase" data-i18n="what_title">QUÉ HACEMOS</h2>
+            <p class="mt-3 text-slate-400 text-sm sm:text-base" data-i18n="what_subtitle">Ejes estratégicos del grupo para el fortalecimiento científico del sector manufacturero.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -266,48 +298,48 @@
                 <div class="w-12 h-12 rounded-xl bg-cyber-mint/10 border border-cyber-mint/20 flex items-center justify-center text-cyber-mint">
                     <i data-lucide="microscope" class="w-6 h-6"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white font-title">Investigación Aplicada</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Ejecución de proyectos orientados a solucionar problemáticas técnicas específicas de los sectores textil, confección, cuero y calzado.</p>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="what_c1_title">Investigación Aplicada</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="what_c1_desc">Ejecución de proyectos orientados a solucionar problemáticas técnicas específicas de los sectores textil, confección, cuero y calzado.</p>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl space-y-4">
                 <div class="w-12 h-12 rounded-xl bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan">
                     <i data-lucide="cpu" class="w-6 h-6"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white font-title">Desarrollo Tecnológico</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Diseño de prototipos, nuevos materiales, automatización de procesos y pruebas biomecánicas o funcionales.</p>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="what_c2_title">Desarrollo Tecnológico</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="what_c2_desc">Diseño de prototipos, nuevos materiales, automatización de procesos y pruebas biomecánicas o funcionales.</p>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl space-y-4">
                 <div class="w-12 h-12 rounded-xl bg-cyber-lavender/10 border border-cyber-lavender/20 flex items-center justify-center text-cyber-lavender">
                     <i data-lucide="lightbulb" class="w-6 h-6"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white font-title">Innovación & Transferencia</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Implementación de soluciones innovadoras y transferencia de conocimiento directamente al tejido empresarial e instruccional.</p>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="what_c3_title">Innovación & Transferencia</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="what_c3_desc">Implementación de soluciones innovadoras y transferencia de conocimiento directamente al tejido empresarial e instruccional.</p>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl space-y-4">
                 <div class="w-12 h-12 rounded-xl bg-cyber-coral/10 border border-cyber-coral/20 flex items-center justify-center text-cyber-coral">
                     <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white font-title">Formación Investigativa</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Acompañamiento a aprendices e instructores a través de semilleros para fortalecer competencias metodológicas y técnicas.</p>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="what_c4_title">Formación Investigativa</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="what_c4_desc">Acompañamiento a aprendices e instructores a través de semilleros para fortalecer competencias metodológicas y técnicas.</p>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl space-y-4">
                 <div class="w-12 h-12 rounded-xl bg-cyber-mint/10 border border-cyber-mint/20 flex items-center justify-center text-cyber-mint">
                     <i data-lucide="share-2" class="w-6 h-6"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white font-title">Divulgación del Conocimiento</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Difusión de resultados científicos y tecnológicos mediante eventos, ponencias y la consulta de nuestras publicaciones oficiales.</p>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="what_c5_title">Divulgación del Conocimiento</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="what_c5_desc">Difusión de resultados científicos y tecnológicos mediante eventos, ponencias y la consulta de nuestras publicaciones oficiales.</p>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl space-y-4">
                 <div class="w-12 h-12 rounded-xl bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan">
                     <i data-lucide="folder-kanban" class="w-6 h-6"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white font-title">Proyectos Interdisciplinarios</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Integración de diseño, ingeniería, sostenibilidad y biotecnología aplicada a las necesidades del sector productivo.</p>
+                <h3 class="text-xl font-bold text-white font-title" data-i18n="what_c6_title">Proyectos Interdisciplinarios</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="what_c6_desc">Integración de diseño, ingeniería, sostenibilidad y biotecnología aplicada a las necesidades del sector productivo.</p>
             </div>
         </div>
     </section>
@@ -315,36 +347,36 @@
     <!-- GRUPO DE INVESTIGACIÓN -->
     <section id="grupo-investigacion" class="py-20 reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-cyber-border">
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white">GRUPO DE INVESTIGACIÓN</h2>
-            <p class="mt-3 text-slate-400 text-sm sm:text-base">Información institucional del grupo adscrito al Centro de Manufactura en Textil y Cuero.</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white uppercase" data-i18n="group_title">GRUPO DE INVESTIGACIÓN</h2>
+            <p class="mt-3 text-slate-400 text-sm sm:text-base" data-i18n="group_subtitle">Información institucional del grupo adscrito al Centro de Manufactura en Textil y Cuero.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div class="lg:col-span-6 glass-panel p-8 rounded-2xl space-y-6">
-                <h3 class="text-2xl font-bold text-white font-title">Descripción Institucional</h3>
-                <p class="text-slate-300 text-sm leading-relaxed">
+                <h3 class="text-2xl font-bold text-white font-title" data-i18n="group_desc_title">Descripción Institucional</h3>
+                <p class="text-slate-300 text-sm leading-relaxed" data-i18n="group_desc_text">
                     [Espacio editable: Reseña institucional del grupo de investigación, trayectoria y código de categorización ante Minciencias].
                 </p>
                 <div class="p-4 bg-slate-950/60 rounded-xl border border-cyber-border">
-                    <h4 class="text-xs font-bold uppercase text-cyber-mint tracking-wider mb-1">Centro de Formación</h4>
-                    <p class="text-xs text-slate-300">Centro de Manufactura en Textil y Cuero - Regional Distrito Capital.</p>
+                    <h4 class="text-xs font-bold uppercase text-cyber-mint tracking-wider mb-1" data-i18n="group_center_label">Centro de Formación</h4>
+                    <p class="text-xs text-slate-300" data-i18n="group_center_name">Centro de Manufactura en Textil y Cuero - Regional Distrito Capital.</p>
                 </div>
             </div>
 
             <div class="lg:col-span-6 glass-panel p-8 rounded-2xl space-y-6">
-                <h3 class="text-2xl font-bold text-white font-title">Líneas de Investigación</h3>
+                <h3 class="text-2xl font-bold text-white font-title" data-i18n="group_lines_title">Líneas de Investigación</h3>
                 <ul class="space-y-4 text-sm text-slate-300">
                     <li class="flex items-start gap-3">
                         <i data-lucide="check-circle" class="w-5 h-5 text-cyber-mint flex-shrink-0 mt-0.5"></i>
-                        <span><strong>Línea 1:</strong> [Espacio editable para línea de investigación 1]</span>
+                        <span><strong data-i18n="group_line_1_prefix">Línea 1:</strong> <span data-i18n="group_line_1_text">[Espacio editable para línea de investigación 1]</span></span>
                     </li>
                     <li class="flex items-start gap-3">
                         <i data-lucide="check-circle" class="w-5 h-5 text-cyber-mint flex-shrink-0 mt-0.5"></i>
-                        <span><strong>Línea 2:</strong> [Espacio editable para línea de investigación 2]</span>
+                        <span><strong data-i18n="group_line_2_prefix">Línea 2:</strong> <span data-i18n="group_line_2_text">[Espacio editable para línea de investigación 2]</span></span>
                     </li>
                     <li class="flex items-start gap-3">
                         <i data-lucide="check-circle" class="w-5 h-5 text-cyber-mint flex-shrink-0 mt-0.5"></i>
-                        <span><strong>Objetivo General:</strong> [Espacio editable para definir el objetivo estratégico del grupo]</span>
+                        <span><strong data-i18n="group_obj_prefix">Objetivo General:</strong> <span data-i18n="group_obj_text">[Espacio editable para definir el objetivo estratégico del grupo]</span></span>
                     </li>
                 </ul>
             </div>
@@ -354,47 +386,47 @@
     <!-- SEMILLEROS DE INVESTIGACIÓN -->
     <section id="semilleros" class="py-20 reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-cyber-border">
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white">SEMILLEROS DE INVESTIGACIÓN</h2>
-            <p class="mt-3 text-slate-400 text-sm sm:text-base">Espacio para la formación investigativa de aprendices e instructores.</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white uppercase" data-i18n="hotbed_title">SEMILLEROS DE INVESTIGACIÓN</h2>
+            <p class="mt-3 text-slate-400 text-sm sm:text-base" data-i18n="hotbed_subtitle">Espacio para la formación investigativa de aprendices e instructores.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="glass-panel p-8 rounded-2xl space-y-4">
                 <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-mint bg-cyber-mint/10 border border-cyber-mint/20 px-2.5 py-1 rounded">Activo</span>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-mint bg-cyber-mint/10 border border-cyber-mint/20 px-2.5 py-1 rounded" data-i18n="badge_active">Activo</span>
                     <i data-lucide="sprout" class="w-5 h-5 text-cyber-mint"></i>
                 </div>
                 <h3 class="text-lg font-bold text-white font-title">[Nombre del Semillero 1]</h3>
-                <p class="text-xs text-slate-400 leading-relaxed">[Descripción editable del semillero y actividades en desarrollo].</p>
+                <p class="text-xs text-slate-400 leading-relaxed" data-i18n="hotbed_desc_placeholder">[Descripción editable del semillero y actividades en desarrollo].</p>
                 <div class="pt-4 border-t border-cyber-border text-[11px] text-slate-400 space-y-1">
-                    <p><strong>Línea:</strong> [Línea de investigación relacionada]</p>
-                    <p><strong>Proyecto:</strong> [Proyecto asociado]</p>
+                    <p><strong data-i18n="meta_line">Línea:</strong> [Línea de investigación relacionada]</p>
+                    <p><strong data-i18n="meta_project">Proyecto:</strong> [Proyecto asociado]</p>
                 </div>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl space-y-4">
                 <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-cyan bg-cyber-cyan/10 border border-cyber-cyan/20 px-2.5 py-1 rounded">Activo</span>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-cyan bg-cyber-cyan/10 border border-cyber-cyan/20 px-2.5 py-1 rounded" data-i18n="badge_active">Activo</span>
                     <i data-lucide="sprout" class="w-5 h-5 text-cyber-cyan"></i>
                 </div>
                 <h3 class="text-lg font-bold text-white font-title">[Nombre del Semillero 2]</h3>
-                <p class="text-xs text-slate-400 leading-relaxed">[Descripción editable del semillero y actividades en desarrollo].</p>
+                <p class="text-xs text-slate-400 leading-relaxed" data-i18n="hotbed_desc_placeholder">[Descripción editable del semillero y actividades en desarrollo].</p>
                 <div class="pt-4 border-t border-cyber-border text-[11px] text-slate-400 space-y-1">
-                    <p><strong>Línea:</strong> [Línea de investigación relacionada]</p>
-                    <p><strong>Proyecto:</strong> [Proyecto asociado]</p>
+                    <p><strong data-i18n="meta_line">Línea:</strong> [Línea de investigación relacionada]</p>
+                    <p><strong data-i18n="meta_project">Proyecto:</strong> [Proyecto asociado]</p>
                 </div>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl space-y-4">
                 <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-lavender bg-cyber-lavender/10 border border-cyber-lavender/20 px-2.5 py-1 rounded">En Convocatoria</span>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-cyber-lavender bg-cyber-lavender/10 border border-cyber-lavender/20 px-2.5 py-1 rounded" data-i18n="badge_call">En Convocatoria</span>
                     <i data-lucide="sprout" class="w-5 h-5 text-cyber-lavender"></i>
                 </div>
                 <h3 class="text-lg font-bold text-white font-title">[Nombre del Semillero 3]</h3>
-                <p class="text-xs text-slate-400 leading-relaxed">[Descripción editable del semillero y actividades en desarrollo].</p>
+                <p class="text-xs text-slate-400 leading-relaxed" data-i18n="hotbed_desc_placeholder">[Descripción editable del semillero y actividades en desarrollo].</p>
                 <div class="pt-4 border-t border-cyber-border text-[11px] text-slate-400 space-y-1">
-                    <p><strong>Línea:</strong> [Línea de investigación relacionada]</p>
-                    <p><strong>Proyecto:</strong> [Proyecto asociado]</p>
+                    <p><strong data-i18n="meta_line">Línea:</strong> [Línea de investigación relacionada]</p>
+                    <p><strong data-i18n="meta_project">Proyecto:</strong> [Proyecto asociado]</p>
                 </div>
             </div>
         </div>
@@ -403,31 +435,31 @@
     <!-- I+D+I -->
     <section id="idi" class="py-20 reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-cyber-border">
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white">CONCEPTO I+D+I</h2>
-            <p class="mt-3 text-slate-400 text-sm sm:text-base">Investigación + Desarrollo + Innovación articulados en el SENA CMTC.</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white uppercase" data-i18n="idi_title">CONCEPTO I+D+I</h2>
+            <p class="mt-3 text-slate-400 text-sm sm:text-base" data-i18n="idi_subtitle">Investigación + Desarrollo + Innovación articulados en el SENA CMTC.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="glass-panel p-8 rounded-2xl text-center space-y-4 border-t-4 border-t-cyber-mint">
                 <div class="text-4xl font-black font-title text-cyber-mint">I</div>
-                <h3 class="text-xl font-bold text-white">INVESTIGACIÓN</h3>
-                <p class="text-xs text-slate-300 leading-relaxed">
+                <h3 class="text-xl font-bold text-white uppercase" data-i18n="idi_box1_title">INVESTIGACIÓN</h3>
+                <p class="text-xs text-slate-300 leading-relaxed" data-i18n="idi_box1_desc">
                     Búsqueda rigurosa de nuevos conocimientos científicos aplicados a materiales, biomecánica y optimización de procesos del sector textil-confección y cuero.
                 </p>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl text-center space-y-4 border-t-4 border-t-cyber-cyan">
                 <div class="text-4xl font-black font-title text-cyber-cyan">D</div>
-                <h3 class="text-xl font-bold text-white">DESARROLLO</h3>
-                <p class="text-xs text-slate-300 leading-relaxed">
+                <h3 class="text-xl font-bold text-white uppercase" data-i18n="idi_box2_title">DESARROLLO</h3>
+                <p class="text-xs text-slate-300 leading-relaxed" data-i18n="idi_box2_desc">
                     Transformación del conocimiento en prototipos funcionales, desarrollo de nuevos productos, pruebas piloto e integración tecnológica.
                 </p>
             </div>
 
             <div class="glass-panel p-8 rounded-2xl text-center space-y-4 border-t-4 border-t-cyber-lavender">
                 <div class="text-4xl font-black font-title text-cyber-lavender">I</div>
-                <h3 class="text-xl font-bold text-white">INNOVACIÓN</h3>
-                <p class="text-xs text-slate-300 leading-relaxed">
+                <h3 class="text-xl font-bold text-white uppercase" data-i18n="idi_box3_title">INNOVACIÓN</h3>
+                <p class="text-xs text-slate-300 leading-relaxed" data-i18n="idi_box3_desc">
                     Implementación efectiva de mejoras sustanciales en el entorno productivo, transferencia a aprendices y generación de impacto en la industria.
                 </p>
             </div>
@@ -437,8 +469,8 @@
     <!-- NUESTROS PROYECTOS -->
     <section id="proyectos" class="py-20 reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-cyber-border">
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white">NUESTROS PROYECTOS</h2>
-            <p class="mt-3 text-slate-400 text-sm sm:text-base">Publicación de proyectos de I+D+I en desarrollo e institucionales.</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white uppercase" data-i18n="projects_title">NUESTROS PROYECTOS</h2>
+            <p class="mt-3 text-slate-400 text-sm sm:text-base" data-i18n="projects_subtitle">Publicación de proyectos de I+D+I en desarrollo e institucionales.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -447,13 +479,13 @@
                     <i data-lucide="image" class="w-12 h-12 text-slate-600"></i>
                 </div>
                 <div class="p-6 space-y-3">
-                    <span class="text-[10px] font-extrabold uppercase text-cyber-mint bg-cyber-mint/10 px-2.5 py-1 rounded">En Ejecución</span>
+                    <span class="text-[10px] font-extrabold uppercase text-cyber-mint bg-cyber-mint/10 px-2.5 py-1 rounded" data-i18n="badge_ongoing">En Ejecución</span>
                     <h3 class="text-lg font-bold text-white font-title">[Nombre del Proyecto 1]</h3>
-                    <p class="text-xs text-slate-400">[Descripción del proyecto de investigación o desarrollo tecnológico].</p>
-                    <p class="text-[11px] text-slate-400"><strong>Línea:</strong> [Línea de investigación]</p>
+                    <p class="text-xs text-slate-400" data-i18n="project_desc_placeholder">[Descripción del proyecto de investigación o desarrollo tecnológico].</p>
+                    <p class="text-[11px] text-slate-400"><strong data-i18n="meta_line">Línea:</strong> [Línea de investigación]</p>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="alert('Estructura editable de proyecto')" class="w-full bg-slate-800 hover:bg-slate-700 text-xs font-bold py-2.5 rounded-lg border border-cyber-border transition-colors">
+                    <button onclick="handleProjectClick()" class="w-full bg-slate-800 hover:bg-slate-700 text-xs font-bold py-2.5 rounded-lg border border-cyber-border transition-colors uppercase" data-i18n="btn_view_project">
                         Ver Proyecto
                     </button>
                 </div>
@@ -464,13 +496,13 @@
                     <i data-lucide="image" class="w-12 h-12 text-slate-600"></i>
                 </div>
                 <div class="p-6 space-y-3">
-                    <span class="text-[10px] font-extrabold uppercase text-cyber-cyan bg-cyber-cyan/10 px-2.5 py-1 rounded">Formulación</span>
+                    <span class="text-[10px] font-extrabold uppercase text-cyber-cyan bg-cyber-cyan/10 px-2.5 py-1 rounded" data-i18n="badge_formulation">Formulación</span>
                     <h3 class="text-lg font-bold text-white font-title">[Nombre del Proyecto 2]</h3>
-                    <p class="text-xs text-slate-400">[Descripción del proyecto de investigación o desarrollo tecnológico].</p>
-                    <p class="text-[11px] text-slate-400"><strong>Línea:</strong> [Línea de investigación]</p>
+                    <p class="text-xs text-slate-400" data-i18n="project_desc_placeholder">[Descripción del proyecto de investigación o desarrollo tecnológico].</p>
+                    <p class="text-[11px] text-slate-400"><strong data-i18n="meta_line">Línea:</strong> [Línea de investigación]</p>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="alert('Estructura editable de proyecto')" class="w-full bg-slate-800 hover:bg-slate-700 text-xs font-bold py-2.5 rounded-lg border border-cyber-border transition-colors">
+                    <button onclick="handleProjectClick()" class="w-full bg-slate-800 hover:bg-slate-700 text-xs font-bold py-2.5 rounded-lg border border-cyber-border transition-colors uppercase" data-i18n="btn_view_project">
                         Ver Proyecto
                     </button>
                 </div>
@@ -481,13 +513,13 @@
                     <i data-lucide="image" class="w-12 h-12 text-slate-600"></i>
                 </div>
                 <div class="p-6 space-y-3">
-                    <span class="text-[10px] font-extrabold uppercase text-cyber-lavender bg-cyber-lavender/10 px-2.5 py-1 rounded">Finalizado</span>
+                    <span class="text-[10px] font-extrabold uppercase text-cyber-lavender bg-cyber-lavender/10 px-2.5 py-1 rounded" data-i18n="badge_completed">Finalizado</span>
                     <h3 class="text-lg font-bold text-white font-title">[Nombre del Proyecto 3]</h3>
-                    <p class="text-xs text-slate-400">[Descripción del proyecto de investigación o desarrollo tecnológico].</p>
-                    <p class="text-[11px] text-slate-400"><strong>Línea:</strong> [Línea de investigación]</p>
+                    <p class="text-xs text-slate-400" data-i18n="project_desc_placeholder">[Descripción del proyecto de investigación o desarrollo tecnológico].</p>
+                    <p class="text-[11px] text-slate-400"><strong data-i18n="meta_line">Línea:</strong> [Línea de investigación]</p>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="alert('Estructura editable de proyecto')" class="w-full bg-slate-800 hover:bg-slate-700 text-xs font-bold py-2.5 rounded-lg border border-cyber-border transition-colors">
+                    <button onclick="handleProjectClick()" class="w-full bg-slate-800 hover:bg-slate-700 text-xs font-bold py-2.5 rounded-lg border border-cyber-border transition-colors uppercase" data-i18n="btn_view_project">
                         Ver Proyecto
                     </button>
                 </div>
@@ -495,65 +527,18 @@
         </div>
     </section>
 
-    <!-- EQUIPO -->
-    <section id="equipo" class="py-20 reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-cyber-border">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-3xl sm:text-4xl font-extrabold font-title text-white">EQUIPO</h2>
-            <p class="mt-3 text-slate-400 text-sm sm:text-base">Integrantes del grupo de investigación y dinamizadores SENNOVA.</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="glass-panel p-6 rounded-2xl text-center space-y-4">
-                <div class="w-24 h-24 mx-auto rounded-full bg-slate-950 border-2 border-cyber-mint flex items-center justify-center text-slate-500">
-                    <i data-lucide="user" class="w-10 h-10"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-white font-title">[Nombre Integrante 1]</h3>
-                    <p class="text-xs text-cyber-mint font-semibold uppercase">[Cargo / Rol]</p>
-                    <p class="text-[11px] text-slate-400 mt-1">[Área / Especialidad]</p>
-                </div>
-                <p class="text-xs text-slate-400 leading-relaxed">[Perfil profesional breve del integrante].</p>
-            </div>
-
-            <div class="glass-panel p-6 rounded-2xl text-center space-y-4">
-                <div class="w-24 h-24 mx-auto rounded-full bg-slate-950 border-2 border-cyber-cyan flex items-center justify-center text-slate-500">
-                    <i data-lucide="user" class="w-10 h-10"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-white font-title">[Nombre Integrante 2]</h3>
-                    <p class="text-xs text-cyber-cyan font-semibold uppercase">[Cargo / Rol]</p>
-                    <p class="text-[11px] text-slate-400 mt-1">[Área / Especialidad]</p>
-                </div>
-                <p class="text-xs text-slate-400 leading-relaxed">[Perfil profesional breve del integrante].</p>
-            </div>
-
-            <div class="glass-panel p-6 rounded-2xl text-center space-y-4">
-                <div class="w-24 h-24 mx-auto rounded-full bg-slate-950 border-2 border-cyber-lavender flex items-center justify-center text-slate-500">
-                    <i data-lucide="user" class="w-10 h-10"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-white font-title">[Nombre Integrante 3]</h3>
-                    <p class="text-xs text-cyber-lavender font-semibold uppercase">[Cargo / Rol]</p>
-                    <p class="text-[11px] text-slate-400 mt-1">[Área / Especialidad]</p>
-                </div>
-                <p class="text-xs text-slate-400 leading-relaxed">[Perfil profesional breve del integrante].</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACTO (CON LA TIPOGRAFÍA INSTITUCIONAL "font-title uppercase") -->
+    <!-- CONTACTO -->
     <section id="contacto" class="py-20 reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-cyber-border">
         <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 class="text-3xl sm:text-4xl font-extrabold font-title uppercase tracking-wider text-white">Canal de Contacto</h2>
-            <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">¿Tienes alguna duda o quieres conocer más sobre la viabilidad técnica del proyecto? Escríbenos.</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-title uppercase tracking-wider text-white" data-i18n="contact_title">CONTACTO</h2>
+            <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto" data-i18n="contact_subtitle">¿Tienes alguna duda o quieres conocer más sobre la viabilidad técnica del proyecto? Escríbenos.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <!-- Información Institucional Izquierda -->
             <div class="lg:col-span-5 space-y-6 pt-2">
                 <div class="space-y-3">
-                    <h3 class="text-lg font-bold text-white font-title">Información Institucional</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed">
+                    <h3 class="text-lg font-bold text-white font-title" data-i18n="contact_info_title">Información Institucional</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed" data-i18n="contact_info_desc">
                         Línea de investigación y desarrollo aplicada SENNOVA. Centro de Formación para el Desarrollo Tecnológico.
                     </p>
                 </div>
@@ -565,27 +550,26 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <i data-lucide="map-pin" class="w-5 h-5 text-cyber-mint flex-shrink-0"></i>
-                        <span class="text-sm text-slate-200">Bogotá, Colombia</span>
+                        <span class="text-sm text-slate-200" data-i18n="contact_location">Bogotá, Colombia</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Formulario Derecha -->
             <div class="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-2xl">
-                <form onsubmit="event.preventDefault(); alert('Propuesta enviada correctamente.');" class="space-y-5">
+                <form onsubmit="handleFormSubmit(event)" class="space-y-5">
                     <div>
-                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-1.5">Nombre Completo</label>
-                        <input type="text" placeholder="Escribe tu nombre" required class="w-full bg-slate-950/60 border border-cyber-border rounded-xl px-4 py-3 text-white text-sm focus:border-cyber-mint outline-none placeholder:text-slate-600">
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-1.5" data-i18n="form_label_name">Nombre Completo</label>
+                        <input type="text" data-i18n-ph="form_ph_name" placeholder="Escribe tu nombre" required class="w-full bg-slate-950/60 border border-cyber-border rounded-xl px-4 py-3 text-white text-sm focus:border-cyber-mint outline-none placeholder:text-slate-600">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-1.5">Correo Electrónico Institucional</label>
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-1.5" data-i18n="form_label_email">Correo Electrónico Institucional</label>
                         <input type="email" placeholder="ejemplo@sena.edu.co" required class="w-full bg-slate-950/60 border border-cyber-border rounded-xl px-4 py-3 text-white text-sm focus:border-cyber-mint outline-none placeholder:text-slate-600">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-1.5">Mensaje o Consulta</label>
-                        <textarea rows="4" placeholder="Detalla los requerimientos o dudas..." required class="w-full bg-slate-950/60 border border-cyber-border rounded-xl px-4 py-3 text-white text-sm focus:border-cyber-mint outline-none placeholder:text-slate-600"></textarea>
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-1.5" data-i18n="form_label_msg">Mensaje o Consulta</label>
+                        <textarea rows="4" data-i18n-ph="form_ph_msg" placeholder="Detalla los requerimientos o dudas..." required class="w-full bg-slate-950/60 border border-cyber-border rounded-xl px-4 py-3 text-white text-sm focus:border-cyber-mint outline-none placeholder:text-slate-600"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-[#52c41a] hover:bg-[#43a012] text-white font-extrabold py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-sm uppercase tracking-wider">
+                    <button type="submit" class="w-full bg-[#52c41a] hover:bg-[#43a012] text-white font-extrabold py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-sm uppercase tracking-wider" data-i18n="form_btn_submit">
                         Enviar Propuesta
                     </button>
                 </form>
@@ -593,96 +577,87 @@
         </div>
     </section>
 
-    <!-- MODAL DE SISTEMA INDEPENDIENTE DE REVISTAS -->
+    <!-- MODAL DE REVISTAS -->
     <div id="revistasModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-3 sm:p-6 bg-cyber-dark/85 backdrop-blur-md overflow-y-auto">
         <div class="glass-panel w-full max-w-5xl rounded-3xl p-4 sm:p-8 relative border border-cyber-border shadow-2xl my-auto max-h-[92vh] flex flex-col overflow-hidden">
             
-            <!-- CABECERA FIJA SUPERIOR CON BOTÓN VOLVER Y "X" EXACTAMENTE COMO EN LA REFERENCIA -->
             <div class="flex-shrink-0 pb-4 mb-4 border-b border-cyber-border flex items-center justify-between gap-4 z-20">
-                <div id="headerVolverContenedor">
-                    <!-- Botón Volver se inyecta dinámicamente o permanece vacío -->
-                </div>
+                <div id="headerVolverContenedor"></div>
                 <button onclick="closeRevistasModal()" class="p-2.5 rounded-xl bg-slate-900/90 border border-cyber-border text-slate-300 hover:text-white hover:bg-cyber-mint transition-colors shadow-lg flex-shrink-0 ml-auto" aria-label="Cerrar modal">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
 
-            <!-- CUERPO DEL MODAL CON SCROLL PROPIO -->
             <div class="flex-grow overflow-y-auto pr-1 space-y-6">
 
-                <!-- VISTA 1: LISTADO DE TODAS LAS REVISTAS REALES -->
+                <!-- VISTA 1: LISTADO DE TODAS LAS REVISTAS -->
                 <div id="vistaListadoRevistas" class="space-y-6">
                     <div>
-                        <span class="text-xs font-mono text-cyber-mint uppercase font-bold tracking-widest">Catálogo Oficial OJS SENA</span>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-title mt-1">Publicaciones del Centro</h2>
-                        <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-normal">Seleccione una edición para consultar su ficha técnica e información detallada.</p>
+                        <span class="text-xs font-mono text-cyber-mint uppercase font-bold tracking-widest" data-i18n="modal_catalog_badge">Catálogo Oficial OJS SENA</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-title mt-1" data-i18n="modal_catalog_title">Publicaciones del Centro</h2>
+                        <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-normal" data-i18n="modal_catalog_desc">Seleccione una edición para consultar su ficha técnica e información detallada.</p>
                     </div>
 
-                    <!-- Grid de las ediciones -->
-                    <div id="gridTarjetasRevistas" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
-                        <!-- JavaScript renderiza las tarjetas dinámicamente -->
-                    </div>
+                    <div id="gridTarjetasRevistas" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2"></div>
                 </div>
 
                 <!-- VISTA 2: FICHA INDIVIDUAL DE LA REVISTA SELECCIONADA -->
                 <div id="vistaFichaRevista" class="hidden space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                        <!-- Portada de la Edición -->
                         <div class="md:col-span-4 bg-slate-950/80 p-6 rounded-2xl border border-cyber-border text-center space-y-4 flex flex-col items-center justify-center">
-                            <div id="fichaPortadaContenedor" class="w-full h-80 rounded-xl overflow-hidden border border-cyber-border flex items-center justify-center">
-                                <!-- Imagen renderizada mediante JS -->
-                            </div>
+                            <div id="fichaPortadaContenedor" class="w-full h-80 rounded-xl overflow-hidden border border-cyber-border flex items-center justify-center"></div>
                             <span class="inline-block text-[10px] font-mono font-bold uppercase tracking-widest text-cyber-mint bg-cyber-mint/10 border border-cyber-mint/20 px-3 py-1 rounded" id="fichaVolumenAnio">
                                 VOLUMEN
                             </span>
                         </div>
 
-                        <!-- Información Detallada -->
                         <div class="md:col-span-8 space-y-4">
                             <h3 class="text-2xl font-bold text-white font-title" id="fichaTitulo">Revista INN-LAB</h3>
                             
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
                                 <div class="p-3 bg-slate-950/60 rounded-xl border border-cyber-border">
-                                    <span class="block text-slate-400 font-semibold">Volumen</span>
+                                    <span class="block text-slate-400 font-semibold" data-i18n="modal_card_vol">Volumen</span>
                                     <span class="text-white font-bold" id="fichaVolumen">8</span>
                                 </div>
                                 <div class="p-3 bg-slate-950/60 rounded-xl border border-cyber-border">
-                                    <span class="block text-slate-400 font-semibold">Año</span>
+                                    <span class="block text-slate-400 font-semibold" data-i18n="modal_card_year">Año</span>
                                     <span class="text-white font-bold" id="fichaAnio">2024</span>
                                 </div>
                                 <div class="p-3 bg-slate-950/60 rounded-xl border border-cyber-border col-span-2 sm:col-span-1">
-                                    <span class="block text-slate-400 font-semibold">Fecha Publicación</span>
+                                    <span class="block text-slate-400 font-semibold" data-i18n="modal_card_date">Fecha Publicación</span>
                                     <span class="text-white font-bold" id="fichaFecha">Febrero 17, 2025</span>
                                 </div>
                             </div>
 
                             <div class="space-y-2">
-                                <h4 class="text-xs font-bold uppercase text-slate-300 tracking-wider">DESCRIPCIÓN DE ESTA EDICIÓN:</h4>
+                                <h4 class="text-xs font-bold uppercase text-slate-300 tracking-wider" data-i18n="modal_desc_label">DESCRIPCIÓN DE ESTA EDICIÓN:</h4>
                                 <p class="text-xs sm:text-sm text-slate-300 leading-relaxed p-4 bg-slate-950/40 rounded-xl border border-cyber-border" id="fichaDescripcion">
                                     [Cargando descripción...]
                                 </p>
                             </div>
 
                             <div class="space-y-2">
-                                <h4 class="text-xs font-bold uppercase text-slate-300 tracking-wider">ARTÍCULOS Y CONTENIDO DESTACADO:</h4>
+                                <h4 class="text-xs font-bold uppercase text-slate-300 tracking-wider" data-i18n="modal_articles_label">ARTÍCULOS Y CONTENIDO DESTACADO:</h4>
                                 <div class="p-4 bg-slate-950/40 rounded-xl border border-cyber-border max-h-48 overflow-y-auto" id="fichaArticulos">
-                                    <ul class="space-y-2 text-xs text-slate-300" id="listaArticulosContent">
-                                        <!-- Inyección de Artículos -->
-                                    </ul>
+                                    <ul class="space-y-2 text-xs text-slate-300" id="listaArticulosContent"></ul>
                                 </div>
                             </div>
 
                             <div class="space-y-2">
-                                <h4 class="text-xs font-bold uppercase text-slate-300 tracking-wider">TEMÁTICAS PRINCIPALES:</h4>
+                                <h4 class="text-xs font-bold uppercase text-slate-300 tracking-wider" data-i18n="modal_topics_label">TEMÁTICAS PRINCIPALES:</h4>
                                 <p class="text-xs text-slate-400 p-3 bg-slate-950/40 rounded-xl border border-cyber-border" id="fichaTematicas">
                                     [Cargando temáticas...]
                                 </p>
                             </div>
 
-                            <!-- ÚNICO BOTÓN DE ACCIÓN: CENTRADO Y EXCLUSIVO PARA VER / DESCARGAR PDF COMPLETO -->
-                            <div class="pt-4 flex flex-wrap justify-center gap-3">
-                                <a id="btnDescargarPdf" href="#" target="_blank" rel="noopener noreferrer" class="hidden inline-flex items-center justify-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white font-extrabold px-8 py-4 rounded-xl transition-all shadow-lg shadow-cyan-600/20 text-xs uppercase tracking-wider">
-                                    <i data-lucide="download" class="w-4 h-4"></i> VER / DESCARGAR PDF COMPLETO
+                            <div class="pt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                                <a id="btnPaginaOficial" href="#" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 bg-[#06b6d4] hover:bg-[#0891b2] text-slate-950 font-extrabold px-5 py-3.5 rounded-full transition-all shadow-lg shadow-cyan-500/25 text-xs uppercase tracking-wider text-center">
+                                    <i data-lucide="external-link" class="w-4 h-4 shrink-0"></i>
+                                    <span class="truncate" data-i18n="btn_official_page">VER EN PÁGINA OFICIAL</span>
+                                </a>
+                                <a id="btnDescargarDrive" href="#" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 bg-[#84cc16] hover:bg-[#65a30d] text-slate-950 font-extrabold px-5 py-3.5 rounded-full transition-all shadow-lg shadow-lime-500/20 text-xs uppercase tracking-wider text-center">
+                                    <i data-lucide="download" class="w-4 h-4 shrink-0"></i>
+                                    <span class="truncate" data-i18n="btn_drive_download">VER Y DESCARGAR EN DRIVE</span>
                                 </a>
                             </div>
                         </div>
@@ -704,27 +679,248 @@
                         <img src="./IMG/sena.png" alt="SENA" class="h-10 w-auto object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/83/SENA_logo.svg'">
                         <span class="font-title font-bold text-white text-base">INNMODA-CMTC</span>
                     </div>
-                    <p class="text-xs text-slate-400">
+                    <p class="text-xs text-slate-400" data-i18n="footer_center">
                         Centro de Manufactura en Textil y Cuero - SENA Regional Distrito Capital.
+                    </p>
+                    <p class="text-xs text-cyber-mint tracking-wide">
+                        <strong class="font-bold" data-i18n="footer_Presented_by">Presentado por la aprendiz:</strong> <span class="font-normal text-slate-200">Carol Hernandez</span>
                     </p>
                 </div>
                 <div class="text-xs text-slate-400 space-y-1">
-                    <p><strong>Concepto:</strong> I+D+I (Investigación + Desarrollo + Innovación)</p>
-                    <p><strong>Ecosistema:</strong> SENNOVA SENA</p>
+                    <p><strong data-i18n="footer_idi_label">I+D+I </strong> <span data-i18n="footer_idi_desc">(Investigación + Desarrollo + Innovación)</span></p>
+                    <p><strong data-i18n="footer_eco_label">Ecosistema:</strong> SENNOVA SENA</p>
                 </div>
                 <div class="text-xs text-slate-400 text-center md:text-right">
-                    <p>&copy; 2026 Servicio Nacional de Aprendizaje (SENA).</p>
-                    <p>Todos los derechos reservados.</p>
+                    <p>&copy; 2026 <span data-i18n="footer_rights_inst">Servicio Nacional de Aprendizaje (SENA).</span></p>
+                    <p data-i18n="footer_rights">Todos los derechos reservados.</p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- LÓGICA JAVASCRIPT CON SOPORTE EXCLUSIVO DE PDF Y BOTÓN CENTRADO -->
+    <!-- LÓGICA JAVASCRIPT & I18N -->
     <script>
-        lucide.createIcons();
+        const translations = {
+            es: {
+                page_title: "INNMODA-CMTC | Investigación + Desarrollo + Innovación (I+D+I)",
+                page_meta_desc: "Portal Institucional INNMODA-CMTC del Centro de Manufactura en Textil y Cuero del SENA. Espacio de Investigación, Desarrollo e Innovación (I+D+I).",
+                nav_brand_sub: "I+D+I SENA",
+                nav_home: "Inicio",
+                nav_what_we_do: "Que hacemos",
+                nav_groups: "Grupo de investigacion",
+                nav_hotbeds: "Semilleros",
+                nav_idi: "I+D+I",
+                nav_projects: "Nuestros proyectos",
+                nav_magazines: "Revistas",
+                nav_contact: "Contacto",
+                hero_badge: "SENA - Centro de Manufactura en Textil y Cuero",
+                hero_research: "INVESTIGACION",
+                hero_development: "+ DESARROLLO",
+                hero_innovation: "+ INNOVACION",
+                hero_description: "Espacio institucional del Centro de Manufactura en Textil y Cuero para promover el avance científico, tecnológico y la innovación aplicada (I+D+I) en las industrias de la moda, calzado y manufactura.",
+                hero_btn_magazines: "VER REVISTAS",
+                hero_btn_activities: "Conocer Actividades",
+                hero_card_title: "Ecosistema I+D+I",
+                hero_card_desc: "Articulación de capacidades de investigación aplicada, desarrollo experimental y transferencia tecnológica para dinamizar la cadena productiva del centro.",
+                hero_card_r: "Investigación",
+                hero_card_d: "Desarrollo",
+                hero_card_i: "Innovación",
+                what_title: "QUÉ HACEMOS",
+                what_subtitle: "Ejes estratégicos del grupo para el fortalecimiento científico del sector manufacturero.",
+                what_c1_title: "Investigación Aplicada",
+                what_c1_desc: "Ejecución de proyectos orientados a solucionar problemáticas técnicas específicas de los sectores textil, confección, cuero y calzado.",
+                what_c2_title: "Desarrollo Tecnológico",
+                what_c2_desc: "Diseño de prototipos, nuevos materiales, automatización de procesos y pruebas biomecánicas o funcionales.",
+                what_c3_title: "Innovación & Transferencia",
+                what_c3_desc: "Implementación de soluciones innovadoras y transferencia de conocimiento directamente al tejido empresarial e instruccional.",
+                what_c4_title: "Formación Investigativa",
+                what_c4_desc: "Acompañamiento a aprendices e instructores a través de semilleros para fortalecer competencias metodológicas y técnicas.",
+                what_c5_title: "Divulgación del Conocimiento",
+                what_c5_desc: "Difusión de resultados científicos y tecnológicos mediante eventos, ponencias y la consulta de nuestras publicaciones oficiales.",
+                what_c6_title: "Proyectos Interdisciplinarios",
+                what_c6_desc: "Integración de diseño, ingeniería, sostenibilidad y biotecnología aplicada a las necesidades del sector productivo.",
+                group_title: "GRUPO DE INVESTIGACIÓN",
+                group_subtitle: "Información institucional del grupo adscrito al Centro de Manufactura en Textil y Cuero.",
+                group_desc_title: "Descripción Institucional",
+                group_desc_text: "[Espacio editable: Reseña institucional del grupo de investigación, trayectoria y código de categorización ante Minciencias].",
+                group_center_label: "Centro de Formación",
+                group_center_name: "Centro de Manufactura en Textil y Cuero - Regional Distrito Capital.",
+                group_lines_title: "Líneas de Investigación",
+                group_line_1_prefix: "Línea 1:",
+                group_line_1_text: "[Espacio editable para línea de investigación 1]",
+                group_line_2_prefix: "Línea 2:",
+                group_line_2_text: "[Espacio editable para línea de investigación 2]",
+                group_obj_prefix: "Objetivo General:",
+                group_obj_text: "[Espacio editable para definir el objetivo estratégico del grupo]",
+                hotbed_title: "SEMILLEROS DE INVESTIGACIÓN",
+                hotbed_subtitle: "Espacio para la formación investigativa de aprendices e instructores.",
+                badge_active: "Activo",
+                badge_call: "En Convocatoria",
+                badge_ongoing: "En Ejecución",
+                badge_formulation: "Formulación",
+                badge_completed: "Finalizado",
+                hotbed_desc_placeholder: "[Descripción editable del semillero y actividades en desarrollo].",
+                meta_line: "Línea:",
+                meta_project: "Proyecto:",
+                idi_title: "CONCEPTO I+D+I",
+                idi_subtitle: "Investigación + Desarrollo + Innovación articulados en el SENA CMTC.",
+                idi_box1_title: "INVESTIGACIÓN",
+                idi_box1_desc: "Búsqueda rigurosa de nuevos conocimientos científicos aplicados a materiales, biomecánica y optimización de procesos del sector textil-confección y cuero.",
+                idi_box2_title: "DESARROLLO",
+                idi_box2_desc: "Transformación del conocimiento en prototipos funcionales, desarrollo de nuevos productos, pruebas piloto e integración tecnológica.",
+                idi_box3_title: "INNOVACIÓN",
+                idi_box3_desc: "Implementación efectiva de mejoras sustanciales en el entorno productivo, transferencia a aprendices y generación de impacto en la industria.",
+                projects_title: "NUESTROS PROYECTOS",
+                projects_subtitle: "Publicación de proyectos de I+D+I en desarrollo e institucionales.",
+                project_desc_placeholder: "[Descripción del proyecto de investigación o desarrollo tecnológico].",
+                btn_view_project: "Ver Proyecto",
+                contact_title: "CONTACTO",
+                contact_subtitle: "¿Tienes alguna duda o quieres conocer más sobre la viabilidad técnica del proyecto? Escríbenos.",
+                contact_info_title: "Información Institucional",
+                contact_info_desc: "Línea de investigación y desarrollo aplicada SENNOVA. Centro de Formación para el Desarrollo Tecnológico.",
+                contact_location: "Bogotá, Colombia",
+                form_label_name: "Nombre Completo",
+                form_ph_name: "Escribe tu nombre",
+                form_label_email: "Correo Electrónico Institucional",
+                form_label_msg: "Mensaje o Consulta",
+                form_ph_msg: "Detalla los requerimientos o dudas...",
+                form_btn_submit: "Enviar Propuesta",
+                modal_catalog_badge: "Catálogo Oficial OJS SENA",
+                modal_catalog_title: "Publicaciones del Centro",
+                modal_catalog_desc: "Seleccione una edición para consultar su ficha técnica e información detallada.",
+                modal_btn_card: "VER INFORMACIÓN",
+                modal_back_btn: "VOLVER A REVISTAS",
+                modal_card_vol: "Volumen",
+                modal_card_year: "Año",
+                modal_card_date: "Fecha Publicación",
+                modal_desc_label: "DESCRIPCIÓN DE ESTA EDICIÓN:",
+                modal_articles_label: "ARTÍCULOS Y CONTENIDO DESTACADO:",
+                modal_topics_label: "TEMÁTICAS PRINCIPALES:",
+                btn_official_page: "VER EN PÁGINA OFICIAL",
+                btn_drive_download: "VER Y DESCARGAR EN DRIVE",
+                modal_no_articles: "[Artículos y contenido disponible en el portal oficial del SENA]",
+                footer_center: "Centro de Manufactura en Textil y Cuero - SENA Regional Distrito Capital.",
+                footer_presented_by: "presentado por la aprendiz:",
+                footer_idi_label: "I+D+I",
+                footer_idi_desc: "(Investigación + Desarrollo + Innovación)",
+                footer_eco_label: "Ecosistema:",
+                footer_rights_inst: "Servicio Nacional de Aprendizaje (SENA).",
+                footer_rights: "Todos los derechos reservados.",
+                alert_form_sent: "Propuesta enviada correctamente.",
+                alert_project_struct: "Estructura editable de proyecto"
+            },
+            en: {
+                page_title: "INNMODA-CMTC | Research + Development + Innovation (R&D&I)",
+                page_meta_desc: "INNMODA-CMTC Institutional Portal of SENA's Center for Textile and Leather Manufacturing. Space for Research, Development, and Innovation (R&D&I).",
+                nav_brand_sub: "R&D&I SENA",
+                nav_home: "Home",
+                nav_what_we_do: "What we do",
+                nav_groups: "Research Group",
+                nav_hotbeds: "Hotbeds",
+                nav_idi: "R&D&I",
+                nav_projects: "Our Projects",
+                nav_magazines: "Journals",
+                nav_contact: "Contact",
+                hero_badge: "SENA - Center for Textile and Leather Manufacturing",
+                hero_research: "RESEARCH",
+                hero_development: "+ DEVELOPMENT",
+                hero_innovation: "+ INNOVATION",
+                hero_description: "Institutional space of the Center for Textile and Leather Manufacturing to promote scientific, technological advancement, and applied innovation (R&D&I) across fashion, footwear, and manufacturing industries.",
+                hero_btn_magazines: "VIEW JOURNALS",
+                hero_btn_activities: "Explore Activities",
+                hero_card_title: "R&D&I Ecosystem",
+                hero_card_desc: "Articulation of applied research, experimental development, and technology transfer capabilities to enhance the center's productive supply chain.",
+                hero_card_r: "Research",
+                hero_card_d: "Development",
+                hero_card_i: "Innovation",
+                what_title: "WHAT WE DO",
+                what_subtitle: "Strategic research axes designed to strengthen the manufacturing sector scientifically.",
+                what_c1_title: "Applied Research",
+                what_c1_desc: "Execution of targeted projects addressing specific technical challenges in the textile, apparel, leather, and footwear sectors.",
+                what_c2_title: "Technological Development",
+                what_c2_desc: "Prototyping, engineering of advanced sustainable materials, process automation, and biomechanical or functional testing.",
+                what_c3_title: "Innovation & Transfer",
+                what_c3_desc: "Implementation of innovative industrial solutions and direct technology transfer to corporate and educational environments.",
+                what_c4_title: "Research Training",
+                what_c4_desc: "Mentoring apprentices and instructors through research hotbeds to strengthen methodological and high-tech competencies.",
+                what_c5_title: "Knowledge Dissemination",
+                what_c5_desc: "Dissemination of scientific and technological outcomes through academic events, keynotes, and official indexed publications.",
+                what_c6_title: "Interdisciplinary Projects",
+                what_c6_desc: "Convergence of industrial design, engineering, sustainability, and applied biotechnology tailored to market demands.",
+                group_title: "RESEARCH GROUP",
+                group_subtitle: "Institutional overview of the research group based at the Center for Textile and Leather Manufacturing.",
+                group_desc_title: "Institutional Overview",
+                group_desc_text: "[Editable space: Institutional overview of the research group, historical background, and Minciencias accreditation code].",
+                group_center_label: "Training Center",
+                group_center_name: "Center for Textile and Leather Manufacturing - Capital District Regional.",
+                group_lines_title: "Research Lines",
+                group_line_1_prefix: "Line 1:",
+                group_line_1_text: "[Editable space for research line 1]",
+                group_line_2_prefix: "Line 2:",
+                group_line_2_text: "[Editable space for research line 2]",
+                group_obj_prefix: "General Objective:",
+                group_obj_text: "[Editable space to define the strategic objective of the group]",
+                hotbed_title: "RESEARCH HOTBEDS",
+                hotbed_subtitle: "Collaborative incubator space for research training of apprentices and instructors.",
+                badge_active: "Active",
+                badge_call: "Open Call",
+                badge_ongoing: "In Progress",
+                badge_formulation: "Formulation",
+                badge_completed: "Completed",
+                hotbed_desc_placeholder: "[Editable description of the research incubator and ongoing development activities].",
+                meta_line: "Line:",
+                meta_project: "Project:",
+                idi_title: "R&D&I CONCEPT",
+                idi_subtitle: "Research + Development + Innovation articulated across SENA CMTC.",
+                idi_box1_title: "RESEARCH",
+                idi_box1_desc: "Rigorous generation of applied scientific knowledge in smart materials, biomechanics, and manufacturing process optimization.",
+                idi_box2_title: "DEVELOPMENT",
+                idi_box2_desc: "Translating knowledge into functional prototypes, innovative products, pilot industrial testing, and technology integration.",
+                idi_box3_title: "INNOVATION",
+                idi_box3_desc: "Effective deployment of substantial upgrades across production sectors, skill transfer to trainees, and tangible industry impact.",
+                projects_title: "OUR PROJECTS",
+                projects_subtitle: "Showcase of institutional and ongoing R&D&I projects.",
+                project_desc_placeholder: "[Description of the applied research or technological development project].",
+                btn_view_project: "View Project",
+                contact_title: "CONTACT",
+                contact_subtitle: "Do you have any inquiries or want to know more about the technical feasibility of a project? Get in touch.",
+                contact_info_title: "Institutional Information",
+                contact_info_desc: "SENNOVA applied research and technological development line. Technology Training Center.",
+                contact_location: "Bogotá, Colombia",
+                form_label_name: "Full Name",
+                form_ph_name: "Enter your full name",
+                form_label_email: "Institutional Email",
+                form_label_msg: "Message or Inquiry",
+                form_ph_msg: "Describe your project requirements or inquiries...",
+                form_btn_submit: "Submit Proposal",
+                modal_catalog_badge: "Official SENA OJS Catalog",
+                modal_catalog_title: "Center Publications",
+                modal_catalog_desc: "Select an edition to view its technical sheet and detailed information.",
+                modal_btn_card: "VIEW DETAILS",
+                modal_back_btn: "BACK TO JOURNALS",
+                modal_card_vol: "Volume",
+                modal_card_year: "Year",
+                modal_card_date: "Publication Date",
+                modal_desc_label: "EDITION DESCRIPTION:",
+                modal_articles_label: "FEATURED ARTICLES & CONTENTS:",
+                modal_topics_label: "MAIN TOPICS:",
+                btn_official_page: "VIEW ON OFFICIAL PORTAL",
+                btn_drive_download: "VIEW & DOWNLOAD ON DRIVE",
+                modal_no_articles: "[Articles and full content available on the official SENA portal]",
+                footer_center: "Center for Textile and Leather Manufacturing - SENA Capital District Regional.",
+                footer_presented_by: "presented by apprentice:",
+                footer_idi_label: "R&D&I",
+                footer_idi_desc: "(Research + Development + Innovation)",
+                footer_eco_label: "Ecosystem:",
+                footer_rights_inst: "National Apprenticeship Service (SENA).",
+                footer_rights: "All rights reserved.",
+                alert_form_sent: "Proposal submitted successfully.",
+                alert_project_struct: "Editable project structure"
+            }
+        };
 
-        // ESTRUCTURA CON DATOS REALES DE LAS 8 EDICIONES Y ACCESO A PDF EN VOLUMEN 8
+        let currentLang = localStorage.getItem('site_lang') || 'es';
+
         const repositorioRevistas = [
             {
                 id: "vol-8-num-1-2024",
@@ -732,11 +928,18 @@
                 volumen: "8",
                 numero: "1",
                 anio: "2024",
-                fecha: "Enero – Diciembre de 2024",
+                fecha: { es: "Enero – Diciembre de 2024", en: "January – December 2024" },
                 portada: "./IMG/portada_vol8.jpg",
-                descripcion: "La edición se centra en la sostenibilidad ambiental en el sistema moda, abordando el impacto ambiental de la industria, las estrategias de economía circular, el uso de nuevos materiales sostenibles (como aglomerados de residuos agroindustriales y bioplásticos a partir de borra de café) y la integración de la tradición artesanal con tecnologías modernas bajo el concepto de slow fashion.",
-                tematicas: "Sostenibilidad y Economía Circular, Innovación Tecnológica, Formación Profesional y Articulación, Artesanía y Tradición",
-                pdfUrl: "https://revistas.sena.edu.co/index.php/innlab/issue/view/572/541",
+                descripcion: {
+                    es: "La edición se centra en la sostenibilidad ambiental en el sistema moda, abordando el impacto ambiental de la industria, las estrategias de economía circular, el uso de nuevos materiales sostenibles (como aglomerados de residuos agroindustriales y bioplásticos a partir de borra de café) y la integración de la tradición artesanal con tecnologías modernas bajo el concepto de slow fashion.",
+                    en: "This edition focuses on environmental sustainability in the fashion system, addressing industrial environmental footprint, circular economy frameworks, bio-based materials (such as agro-industrial waste agglomerates and coffee ground bioplastics), and blending ancestral artisanal crafts with modern tech under slow fashion concepts."
+                },
+                tematicas: {
+                    es: "Sostenibilidad y Economía Circular, Innovación Tecnológica, Formación Profesional y Articulación, Artesanía y Tradición",
+                    en: "Sustainability & Circular Economy, Technological Innovation, Vocational Training & Articulation, Craftsmanship & Tradition"
+                },
+                urlOficial: "https://revistas.sena.edu.co/index.php/innlab/issue/view/572/541",
+                urlDrive: "https://drive.google.com/file/d/1bVI_IJt_TggC6xFwxtFEP7pL9LW4vuYR/view?usp=sharing",
                 articulos: [
                     "Evidencia industrial en el desarrollo de aglomerados a partir de residuos agroindustriales",
                     "Desarrollo de material compuesto sostenible empleando ácido poliláctico reforzado con borra de café para manufactura aditiva",
@@ -756,11 +959,18 @@
                 volumen: "7",
                 numero: "1",
                 anio: "2023",
-                fecha: "Diciembre 31, 2023",
+                fecha: { es: "Diciembre 31, 2023", en: "December 31, 2023" },
                 portada: "./IMG/portada_vol7.jpg",
-                descripcion: "Esta edición se centra en la investigación y los avances más recientes sobre el uso de nanorrecubrimientos en textiles para indumentaria deportiva, detallando la aplicación de nanopartículas de sílice y de titanio para conferir propiedades de hidrofobicidad (efecto loto) y protección contra la radiación ultravioleta (UV).",
-                tematicas: "Nanotecnología Textil, Indumentaria Deportiva, Propiedades Funcionales, Investigación Aplicada, Desarrollo Tecnológico, Ecosistema SENA",
-                pdfUrl: "https://revistas.sena.edu.co/index.php/innlab/issue/view/512/435",
+                descripcion: {
+                    es: "Esta edición se centra en la investigación y los avances más recientes sobre el uso de nanorrecubrimientos en textiles para indumentaria deportiva, detallando la aplicación de nanopartículas de sílice y de titanio para conferir propiedades de hidrofobicidad (efecto loto) y protección contra la radiación ultravioleta (UV).",
+                    en: "This issue focuses on cutting-edge research regarding nanocoatings in sportswear textiles, detailing silica and titanium dioxide nanoparticle applications to provide superhydrophobic properties (lotus effect) and UV protection."
+                },
+                tematicas: {
+                    es: "Nanotecnología Textil, Indumentaria Deportiva, Propiedades Funcionales, Investigación Aplicada, Desarrollo Tecnológico, Ecosistema SENA",
+                    en: "Textile Nanotechnology, Sportswear, Functional Properties, Applied Research, Technological Development, SENA Ecosystem"
+                },
+                urlOficial: "https://revistas.sena.edu.co/index.php/innlab/issue/view/547",
+                urlDrive: "https://drive.google.com/drive/folders/1jEfo8G1gtX5s2PPNdYZUyQGNpsvGokDE?usp=sharing",
                 articulos: [
                     "Uso de nanorrecubrimientos en textiles para indumentaria deportiva"
                 ]
@@ -771,11 +981,18 @@
                 volumen: "6",
                 numero: "1",
                 anio: "2022",
-                fecha: "Mayo 9, 2023",
+                fecha: { es: "Mayo 9, 2023", en: "May 9, 2023" },
                 portada: "./IMG/portada_vol6.jpg",
-                descripcion: "Esta edición (Vol. 6, 2022) de la revista INNMODALAB es una publicación de divulgación científica del Centro de Manufactura en Textil y Cuero del SENA (Regional Distrito Capital). Está dirigida a instructores, aprendices, empresarios e investigadores vinculados a los sectores Textil-confección y Cuero, calzado y marroquinería. Su contenido se centra en la investigación aplicada, el uso de nuevas tecnologías para el sistema moda, materiales y nanotecnología, procesos productivos y experiencias de formación para el trabajo.",
-                tematicas: "Nanotecnología y Materiales Avanzados, Sostenibilidad y Moda Verde, Antropometría y Confort en el Diseño, Protección y Seguridad Ocupacional.",
-                pdfUrl: "https://revistas.sena.edu.co/index.php/innlab/issue/view/512/435",
+                descripcion: {
+                    es: "Esta edición (Vol. 6, 2022) de la revista INNMODALAB es una publicación de divulgación científica del Centro de Manufactura en Textil y Cuero del SENA (Regional Distrito Capital). Está dirigida a instructores, aprendices, empresarios e investigadores vinculados a los sectores Textil-confección y Cuero, calzado y marroquinería. Su contenido se centra en la investigación aplicada, el uso de nuevas tecnologías para el sistema moda, materiales y nanotecnología, procesos productivos y experiencias de formación para el trabajo.",
+                    en: "This issue of INNMODALAB journal serves as a scientific dissemination publication from SENA's Center for Textile and Leather Manufacturing. Addressed to instructors, researchers, and entrepreneurs across apparel and leather industries, featuring applied research, advanced materials, and nanotechnology."
+                },
+                tematicas: {
+                    es: "Nanotecnología y Materiales Avanzados, Sostenibilidad y Moda Verde, Antropometría y Confort en el Diseño, Protección y Seguridad Ocupacional.",
+                    en: "Nanotechnology & Advanced Materials, Sustainability & Green Fashion, Anthropometrics & Design Comfort, Occupational Safety."
+                },
+                urlOficial: "https://revistas.sena.edu.co/index.php/innlab/issue/view/512/435",
+                urlDrive: "https://drive.google.com/file/d/1JShNywqL9fuHnZMpqzHKzErci1anVCIg/view?usp=sharing",
                 articulos: [
                     "Agentes antiestáticos en prendas de uso cotidiano: estado y perspectivas",
                     "Acercamiento a la identificación de la tipología de busto de mujeres del Valle de Aburrá para desarrollo de indumentaria",
@@ -792,11 +1009,18 @@
                 volumen: "5",
                 numero: "1",
                 anio: "2020",
-                fecha: "Mayo 17, 2022",
+                fecha: { es: "Mayo 17, 2022", en: "May 17, 2022" },
                 portada: "./IMG/portada_vol5.jpg",
-                descripcion: "Esta edición de INNMOLAB está dedicada a explorar los avances en nanotecnología textil aplicados a la indumentaria deportiva. El contenido se centra en la investigación y el desarrollo tecnológico para la obtención de tejidos funcionales mediante nanorrecubrimientos de sílice y titanio, abordando temáticas de investigación aplicada, sostenibilidad en el sistema moda y la mejora del rendimiento en prendas especializadas, dentro del marco del ecosistema de formación e innovación del SENA.",
-                tematicas: "Indumentaria deportiva, Nanotecnología textil, Nanorrecubrimientos, Nanopartículas de sílice, Nanopartículas de titanio, Textiles funcionalizados",
-                pdfUrl: "https://revistas.sena.edu.co/index.php/innlab/issue/view/427/384",
+                descripcion: {
+                    es: "Esta edición de INNMOLAB está dedicada a explorar los avances en nanotecnología textil aplicados a la indumentaria deportiva. El contenido se centra en la investigación y el desarrollo tecnológico para la obtención de tejidos funcionales mediante nanorrecubrimientos de sílice y titanio, abordando temáticas de investigación aplicada, sostenibilidad en el sistema moda y la mejora del rendimiento en prendas especializadas, dentro del marco del ecosistema de formación e innovación del SENA.",
+                    en: "Dedicated to exploring advances in textile nanotechnology applied to sportswear, functionalized fabrics through silica and titanium nanocoatings, and performance enhancement under SENA's innovation ecosystem."
+                },
+                tematicas: {
+                    es: "Indumentaria deportiva, Nanotecnología textil, Nanorrecubrimientos, Nanopartículas de sílice, Nanopartículas de titanio, Textiles funcionalizados",
+                    en: "Sportswear, Textile Nanotechnology, Nanocoatings, Silica Nanoparticles, Titanium Nanoparticles, Functionalized Fabrics"
+                },
+                urlOficial: "https://revistas.sena.edu.co/index.php/innlab/issue/view/427/384",
+                urlDrive: "https://drive.google.com/file/d/1Q4O5vW0A8RDf11DKS_8VbSks9VWZd9-N/view?usp=sharing",
                 articulos: [
                     "Uso de nanorrecubrimientos en textiles para indumentaria deportiva",
                     "Análisis bibliométrico sobre la aplicación de nanopartículas de sílice y de titanio para conferir hidrofobicidad y protección UV en textiles"
@@ -808,11 +1032,18 @@
                 volumen: "4",
                 numero: "1",
                 anio: "2019",
-                fecha: "Agosto 4, 2021",
+                fecha: { es: "Agosto 4, 2021", en: "August 4, 2021" },
                 portada: "./IMG/portada_vol4.jpg",
-                descripcion: "Compilación de artículos de investigación científica y/o tecnológica, incluyendo el 'Análisis técnico y aprovechamiento comercial de las principales fibras artesanales colombianas' elaborado por Carolina Calderón.",
-                tematicas: "Fibras Artesanales Colombianas, Investigación Científica, Aprovechamiento Comercial.",
-                pdfUrl: "",
+                descripcion: {
+                    es: "Compilación de artículos de investigación científica y/o tecnológica, incluyendo el 'Análisis técnico y aprovechamiento comercial de las principales fibras artesanales colombianas' elaborado por Carolina Calderón.",
+                    en: "Compilation of scientific and technological papers, including the 'Technical analysis and commercial application of primary Colombian artisanal fibers' by Carolina Calderon."
+                },
+                tematicas: {
+                    es: "Fibras Artesanales Colombianas, Investigación Científica, Aprovechamiento Comercial.",
+                    en: "Colombian Artisanal Fibers, Scientific Research, Commercial Use."
+                },
+                urlOficial: "https://revistas.sena.edu.co/index.php/innlab/issue/view/361",
+                urlDrive: "https://drive.google.com/drive/folders/1hYfppBa3o1ng9QrlRjGSPCoxF78wfAgh?usp=sharing",
                 articulos: []
             },
             {
@@ -821,11 +1052,18 @@
                 volumen: "3",
                 numero: "1",
                 anio: "2018",
-                fecha: "Marzo 27, 2019",
+                fecha: { es: "Marzo 27, 2019", en: "March 27, 2019" },
                 portada: "./IMG/portada_vol3.jpg",
-                descripcion: "Tercera edición enfocada en divulgar preliminares de investigación científica y tecnológica orientados a la marroquinería, biomecánica en calzado y proyectos de diseño con valor agregado.",
-                tematicas: "Investigación Tecnológica, Marroquinería, Biomecánica en Calzado.",
-                pdfUrl: "",
+                descripcion: {
+                    es: "Tercera edición enfocada en divulgar preliminares de investigación científica y tecnológica orientados a la marroquinería, biomecánica en calzado y proyectos de diseño con valor agregado.",
+                    en: "Third edition presenting preliminary scientific and technological findings in leather goods, footwear biomechanics, and high-value design projects."
+                },
+                tematicas: {
+                    es: "Investigación Tecnológica, Marroquinería, Biomecánica en Calzado.",
+                    en: "Technological Research, Leather Goods, Footwear Biomechanics."
+                },
+                urlOficial: "https://revistas.sena.edu.co/index.php/innlab/issue/view/301",
+                urlDrive: "https://drive.google.com/drive/folders/1XBkCalHChtM8i73D3u1hLOjdBia-pqpC?usp=sharing",
                 articulos: []
             },
             {
@@ -834,11 +1072,18 @@
                 volumen: "2",
                 numero: "1",
                 anio: "2017",
-                fecha: "Diciembre 15, 2017",
+                fecha: { es: "Diciembre 15, 2017", en: "December 15, 2017" },
                 portada: "./IMG/portada_vol2.jpg",
-                descripcion: "Es la segunda edición del año 2017 (ISSN: 2539-2379) de la revista académica Innmoda Lab, editada por el Centro de Manufactura en Textil y Cuero del SENA, Regional Distrito Capital. Funciona como un laboratorio de ideas en investigación, innovación y desarrollo tecnológico para el sistema moda (sectores Textil-Confección y Cuero, Calzado y Marroquinería). La edición recopila artículos de investigación aplicada, experiencias de formación pedagógica, apropiación cultural, técnicas de tintura artesanal y el estudio de nuevos materiales y propiedades mecánicas en fibras.",
-                tematicas: "Diseño, Desarrollo y Fabricación de Productos, Pedagogía de la Formación Profesional Integral, Contextos Socioculturales y Tradición Ancestral, Materiales Avanzados y Nanotecnología.",
-                pdfUrl: "https://revistas.sena.edu.co/index.php/innlab/issue/view/556/484",
+                descripcion: {
+                    es: "Es la segunda edición del año 2017 (ISSN: 2539-2379) de la revista académica Innmoda Lab, editada por el Centro de Manufactura en Textil y Cuero del SENA, Regional Distrito Capital. Funciona como un laboratorio de ideas en investigación, innovación y desarrollo tecnológico para el sistema moda (sectores Textil-Confección y Cuero, Calzado y Marroquinería). La edición recopila artículos de investigación aplicada, experiencias de formación pedagógica, apropiación cultural, técnicas de tintura artesanal y el estudio de nuevos materiales y propiedades mecánicas en fibras.",
+                    en: "Second 2017 edition (ISSN: 2539-2379) of the academic journal Innmoda Lab. A think-tank exploring innovation and tech development across the fashion system, encompassing ancestral dye techniques, fiber mechanics, and vocational training."
+                },
+                tematicas: {
+                    es: "Diseño, Desarrollo y Fabricación de Productos, Pedagogía de la Formación Profesional Integral, Contextos Socioculturales y Tradición Ancestral, Materiales Avanzados y Nanotecnología.",
+                    en: "Design, Product Engineering, Vocational Training Pedagogy, Cultural Traditions, Advanced Materials & Nanotechnology."
+                },
+                urlOficial: "https://revistas.sena.edu.co/index.php/innlab/issue/view/556/484",
+                urlDrive: "https://drive.google.com/file/d/1B9PCzupnrXwLaYhc1iQLNeBUzlM_xpuK/view?usp=sharing",
                 articulos: [
                     "Aplicación de la metodología Design-Thinking para la creación de productos con potencial innovador en la industria de la moda",
                     "Representación del contenido matemático, una experiencia de formación en el Centro de Manufactura en Textil y Cuero",
@@ -855,11 +1100,18 @@
                 volumen: "1",
                 numero: "1",
                 anio: "2016",
-                fecha: "Junio 22, 2016",
+                fecha: { es: "Junio 22, 2016", en: "June 22, 2016" },
                 portada: "./IMG/portada_vol1.jpg", 
-                descripcion: "Esta edición difunde procesos de índole académico, científico y tecnológico liderados por el grupo de investigación CMTC-INNMODALAB en el marco de la estrategia SENNOVA, articulando la investigación aplicada y el desarrollo tecnológico enfocado hacia la industria del sistema moda local y nacional.",
-                tematicas: "Nanotecnología y Funcionalización de Textiles, Innovación Tecnológica en la Educación, Gestión Ambiental y Sostenibilidad, Ergonomía y Confort en Marroquinería",
-                pdfUrl: "https://revistas.sena.edu.co/index.php/innlab/issue/view/84/57",
+                descripcion: {
+                    es: "Esta edición difunde procesos de índole académico, científico y tecnológico liderados por el grupo de investigación CMTC-INNMODALAB en el marco de la estrategia SENNOVA, articulando la investigación aplicada y el desarrollo tecnológico enfocado hacia la industria del sistema moda local y nacional.",
+                    en: "First inaugural edition presenting academic, scientific, and technological advancements by the CMTC-INNMODALAB group under the SENNOVA strategy."
+                },
+                tematicas: {
+                    es: "Nanotecnología y Funcionalización de Textiles, Innovación Tecnológica en la Educación, Gestión Ambiental y Sostenibilidad, Ergonomía y Confort en Marroquinería",
+                    en: "Textile Functionalization & Nanotech, Technological Innovation in Education, Environmental Management, Leather Goods Ergonomics"
+                },
+                urlOficial: "https://revistas.sena.edu.co/index.php/innlab/issue/view/84/57",
+                urlDrive: "https://drive.google.com/file/d/1RrUPMX7338HCtvyL_fRtFhZ-uhFQs_Ph/view?usp=sharing",
                 articulos: [
                     "SENNOVA, engranaje para la innovación",
                     "El reto de Colombia, construir un país con oportunidades para todos",
@@ -872,7 +1124,52 @@
             }
         ];
 
-        // Lógica de Menú Móvil
+        let activeRevistaId = null;
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('site_lang', lang);
+            document.documentElement.lang = lang;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (translations[lang][key]) {
+                    el.setAttribute('placeholder', translations[lang][key]);
+                }
+            });
+
+            document.getElementById('pageTitle').innerText = translations[lang].page_title;
+            document.getElementById('pageMetaDesc').setAttribute('content', translations[lang].page_meta_desc);
+
+            const esBtns = [document.getElementById('btnLangEs'), document.getElementById('btnLangEsMobile')];
+            const enBtns = [document.getElementById('btnLangEn'), document.getElementById('btnLangEnMobile')];
+
+            if (lang === 'es') {
+                esBtns.forEach(b => { if(b) b.className = 'px-2 py-0.5 text-xs font-bold rounded text-cyber-mint bg-slate-800 transition-colors'; });
+                enBtns.forEach(b => { if(b) b.className = 'px-2 py-0.5 text-xs font-bold rounded text-slate-400 hover:text-white transition-colors'; });
+            } else {
+                enBtns.forEach(b => { if(b) b.className = 'px-2 py-0.5 text-xs font-bold rounded text-cyber-mint bg-slate-800 transition-colors'; });
+                esBtns.forEach(b => { if(b) b.className = 'px-2 py-0.5 text-xs font-bold rounded text-slate-400 hover:text-white transition-colors'; });
+            }
+
+            const modal = document.getElementById('revistasModal');
+            if (!modal.classList.contains('hidden')) {
+                renderListadoRevistas();
+                if (activeRevistaId && !document.getElementById('vistaFichaRevista').classList.contains('hidden')) {
+                    verFichaRevista(activeRevistaId);
+                }
+            }
+
+            lucide.createIcons();
+        }
+
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
 
@@ -880,13 +1177,36 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
+        document.querySelectorAll('#mobileMenu a, #mobileMenu button').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
             });
         });
 
-        // Lógica Modal Revistas
+        // Interacción de subrayado dinámico en los ítems del menú
+        const navLinks = document.querySelectorAll('.nav-item');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(item => {
+                    item.classList.remove('nav-item-active');
+                    const indicator = item.querySelector('.nav-indicator');
+                    if (indicator) indicator.style.width = '0%';
+                });
+                this.classList.add('nav-item-active');
+                const activeIndicator = this.querySelector('.nav-indicator');
+                if (activeIndicator) activeIndicator.style.width = '100%';
+            });
+        });
+
+        function handleProjectClick() {
+            alert(translations[currentLang].alert_project_struct);
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            alert(translations[currentLang].alert_form_sent);
+        }
+
         function openRevistasModal() {
             renderListadoRevistas();
             mostrarListadoRevistas();
@@ -899,6 +1219,7 @@
             const modal = document.getElementById('revistasModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
+            activeRevistaId = null;
         }
 
         function renderListadoRevistas() {
@@ -908,6 +1229,9 @@
             repositorioRevistas.forEach(revista => {
                 const card = document.createElement('div');
                 card.className = 'glass-panel p-4 rounded-2xl border border-cyber-border flex flex-col justify-between hover:-translate-y-1 transition-all duration-300';
+                
+                const fechaTexto = typeof revista.fecha === 'object' ? revista.fecha[currentLang] : revista.fecha;
+
                 card.innerHTML = `
                     <div class="space-y-3">
                         <div class="h-60 rounded-xl bg-slate-950 overflow-hidden border border-cyber-border flex items-center justify-center relative">
@@ -917,13 +1241,13 @@
                             </span>
                         </div>
                         <div>
-                            <span class="text-[10px] font-mono text-slate-400 font-semibold">${revista.fecha}</span>
+                            <span class="text-[10px] font-mono text-slate-400 font-semibold">${fechaTexto}</span>
                             <h4 class="text-sm font-bold text-white leading-snug">${revista.titulo}</h4>
                         </div>
                     </div>
                     <div class="pt-3 mt-2 border-t border-cyber-border">
                         <button onclick="verFichaRevista('${revista.id}')" class="w-full bg-slate-900 hover:bg-cyber-mint hover:text-white text-cyber-mint font-bold text-xs py-2.5 rounded-xl border border-cyber-border transition-all flex items-center justify-center gap-1.5">
-                            <span>VER INFORMACIÓN</span>
+                            <span>${translations[currentLang].modal_btn_card}</span>
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                         </button>
                     </div>
@@ -934,36 +1258,40 @@
         }
 
         function mostrarListadoRevistas() {
+            activeRevistaId = null;
             document.getElementById('vistaListadoRevistas').classList.remove('hidden');
             document.getElementById('vistaFichaRevista').classList.add('hidden');
             document.getElementById('headerVolverContenedor').innerHTML = '';
         }
 
         function verFichaRevista(idRevista) {
+            activeRevistaId = idRevista;
             const revista = repositorioRevistas.find(r => r.id === idRevista);
             if (!revista) return;
+
+            const descTexto = typeof revista.descripcion === 'object' ? revista.descripcion[currentLang] : revista.descripcion;
+            const tematicasTexto = typeof revista.tematicas === 'object' ? revista.tematicas[currentLang] : revista.tematicas;
+            const fechaTexto = typeof revista.fecha === 'object' ? revista.fecha[currentLang] : revista.fecha;
 
             document.getElementById('fichaTitulo').innerText = revista.titulo;
             document.getElementById('fichaVolumen').innerText = revista.volumen;
             document.getElementById('fichaAnio').innerText = revista.anio;
-            document.getElementById('fichaFecha').innerText = revista.fecha;
+            document.getElementById('fichaFecha').innerText = fechaTexto;
             document.getElementById('fichaVolumenAnio').innerText = `${revista.titulo}`;
-            document.getElementById('fichaDescripcion').innerText = revista.descripcion;
-            document.getElementById('fichaTematicas').innerText = revista.tematicas;
+            document.getElementById('fichaDescripcion').innerText = descTexto;
+            document.getElementById('fichaTematicas').innerText = tematicasTexto;
 
-            // Inyectar botón Volver en la cabecera fija
             document.getElementById('headerVolverContenedor').innerHTML = `
                 <button onclick="mostrarListadoRevistas()" class="inline-flex items-center gap-2 text-xs font-bold text-cyber-mint hover:underline uppercase tracking-wider">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> VOLVER A REVISTAS
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> ${translations[currentLang].modal_back_btn}
                 </button>
             `;
 
-            // Inyectar Artículos si existen
             const listaArticulosContent = document.getElementById('listaArticulosContent');
             if (revista.articulos && revista.articulos.length > 0) {
                 listaArticulosContent.innerHTML = revista.articulos.map(art => `<li class="flex items-start gap-2"><i data-lucide="file-text" class="w-3.5 h-3.5 text-cyber-mint shrink-0 mt-0.5"></i><span>${art}</span></li>`).join('');
             } else {
-                listaArticulosContent.innerHTML = `<li class="text-slate-400 italic">[Artículos y contenido disponible en el portal oficial del SENA]</li>`;
+                listaArticulosContent.innerHTML = `<li class="text-slate-400 italic">${translations[currentLang].modal_no_articles}</li>`;
             }
 
             const contenedor = document.getElementById('fichaPortadaContenedor');
@@ -971,23 +1299,17 @@
                 <img src="${revista.portada}" alt="${revista.titulo}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x600/0a122a/ffffff?text=${encodeURIComponent(revista.titulo)}';">
             `;
 
-            // Botón PDF si está disponible
-            const btnPdf = document.getElementById('btnDescargarPdf');
-            if (revista.pdfUrl) {
-                btnPdf.href = revista.pdfUrl;
-                btnPdf.classList.remove('hidden');
-                btnPdf.classList.add('inline-flex');
-            } else {
-                btnPdf.classList.remove('inline-flex');
-                btnPdf.classList.add('hidden');
-            }
+            const btnOficial = document.getElementById('btnPaginaOficial');
+            const btnDrive = document.getElementById('btnDescargarDrive');
+
+            btnOficial.href = revista.urlOficial || "#";
+            btnDrive.href = revista.urlDrive || "#";
 
             document.getElementById('vistaListadoRevistas').classList.add('hidden');
             document.getElementById('vistaFichaRevista').classList.remove('hidden');
             lucide.createIcons();
         }
 
-        // Observer Animaciones
         const reveals = document.querySelectorAll('.reveal');
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -999,6 +1321,10 @@
         }, { threshold: 0.1 });
 
         reveals.forEach(el => scrollObserver.observe(el));
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLang);
+        });
     </script>
 </body>
 </html>
